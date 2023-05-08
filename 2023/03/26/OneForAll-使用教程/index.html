@@ -119,7 +119,7 @@
 
 
 
-  <title>hexo picture wrong | S1ient</title>
+  <title>OneForAll 使用教程 | S1ient</title>
   
 
 
@@ -240,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://s1ient.github.io/2023/03/09/hexo-picture-wrong/">
+    <link itemprop="mainEntityOfPage" href="https://s1ient.github.io/2023/03/26/OneForAll-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="S1ient">
@@ -257,7 +257,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hexo picture wrong</h1>
+          <h1 class="post-title" itemprop="name headline">OneForAll 使用教程</h1>
         
 
         <div class="post-meta">
@@ -269,7 +269,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-09T13:22:57+08:00">2023-03-09</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-26T16:47:40+08:00">2023-03-26</time>
             
 
             
@@ -305,21 +305,82 @@
       
 
       
-        <p>一个解决 hexo 图片在本地无法显示的问题</p>
-<a id="more"></a>
+        <h1 id="0x01-简介"><a href="#0x01-简介" class="headerlink" title="0x01 简介"></a>0x01 简介</h1><p>OneForAll 是一款集百家之长，收集能力强大、支持子域爆破、验证、爬取、置换、接管、处理功能强大、速度极快、体验良好的子域收集工具。</p>
+<p>OneForAll 是基于 CPython 开发的，所以需要 Python 环境才能运行</p>
+<p>理论上 Python 3.6，3.7 和 3.8 都可以正常运行 OneForAll，但是许多测试都是在 Python 3.7 上进行的，所以推荐使用 Python 3.7 版本运行 OneForAll。</p>
+<p>项目地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;shmilylty&#x2F;OneForAll.git</span><br></pre></td></tr></table></figure>
 
-<p>在搭建写 blog 时发现图片无法显示，网上搜了很多方法，无论是将 post_asset_folder 设置为 true，还是下载 hexo-assert-image 插件都没作用，后来在 B站 看到一个视频（BV1rM411c79A ），试了他的方法可行。</p>
-<p>首先来到 _post 目录下先建一个文件夹用来存放图片，随便什么名字都可以，我取的是 image</p>
-<p><img src="/../image/hexo-picture-wrong/1.png" alt="1"></p>
-<p>把你想要上传的图片放在这个文件夹里面，为了区分哪张图片属于哪个 md 文档，你也可以在这个文件夹里面再新建文件夹，无论如何你只要保证图片在这个 image 文件夹里面</p>
-<p>接着需要一个 md 文档编辑器，我和那个 up 主刚好用的都是 Typora。</p>
-<p>Ctrl + 逗号 进入偏好设置，完成以下设置</p>
-<p><img src="/../image/hexo-picture-wrong/2.png" alt="2"></p>
-<p>接着复制你想要上传的图片的地址，直接粘贴到 Typora 里面，他会转化为相对路径，并且显示图片，点击图片你可以看到你的图片的相对路径</p>
-<p>接着输入以下命令，打开本地预览，就可以看到图片啦</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g -d &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+<p>git 安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;shmilylty&#x2F;OneForAll.git &amp;&amp; cd OneForAll&#x2F;</span><br></pre></td></tr></table></figure>
 
-<p>到这里我有个疑惑，我之前把  post_asset_folder 设置为 true，会在和 md 文档同目录下生成一个文件夹，我把图片放在那个里面，但是为什么不能显示图片呢？</p>
+<p>安装依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt -i https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git stash        # 暂存本地的修改</span><br><span class="line">git fetch --all  # 拉取项目更新</span><br><span class="line">git pull         # 下载覆盖</span><br><span class="line">git stash pop    # 释放本地修改</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x02-语法"><a href="#0x02-语法" class="headerlink" title="0x02 语法"></a>0x02 语法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oneforall.py [选项] run</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">–target</td>
+<td align="left">目标URL</td>
+</tr>
+<tr>
+<td align="left">–brute&#x3D;</td>
+<td align="left">使用爆破模块，默认 False</td>
+</tr>
+<tr>
+<td align="left">–dns&#x3D;</td>
+<td align="left">DNS解析子域，默认 True</td>
+</tr>
+<tr>
+<td align="left">–req&#x3D;</td>
+<td align="left">HTTP请求子域，默认 True</td>
+</tr>
+<tr>
+<td align="left">–port&#x3D;</td>
+<td align="left">请求验证子域的端口范围，默认 80 端口</td>
+</tr>
+<tr>
+<td align="left">–valid&#x3D;</td>
+<td align="left">只导出存活的子域结果，默认 False</td>
+</tr>
+<tr>
+<td align="left">–format&#x3D;</td>
+<td align="left">结果保存格式，默认 csv</td>
+</tr>
+<tr>
+<td align="left">–path&#x3D;</td>
+<td align="left">结果保存路径</td>
+</tr>
+<tr>
+<td align="left">–takeover&#x3D;</td>
+<td align="left">检查子域接管，默认 False</td>
+</tr>
+</tbody></table>
+<h1 id="0x03-使用"><a href="#0x03-使用" class="headerlink" title="0x03 使用"></a>0x03 使用</h1><p>扫描单个域名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 oneforall.py --target example.com run</span><br></pre></td></tr></table></figure>
+
+<p>扫描多域，先把域名放在 url.txt 中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cat url.txt</span><br><span class="line">https://domain1.com</span><br><span class="line">https://domain2.com</span><br><span class="line">http://domain3.com</span><br></pre></td></tr></table></figure>
+
+<p>运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 oneforall.py --targets url.txt run</span><br></pre></td></tr></table></figure>
+
+<p>结果会保存在 <code>results/</code> 目录下，在运行结果中我们可以看到有 URL、子域名、IP等信息</p>
+<p>其中运行结果中 ip 是一行多个、还有重复的，我们需要提取ip转换成每行一个 ip 且没有重复的 txt 文本中，方便其他工具扫描</p>
+<p>脚本：删除重复 IP</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># conding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把同一行的ip换行,然后写进result.txt的文件里</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'ip.txt'</span>,<span class="string">'r'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> readlist:</span><br><span class="line">    <span class="keyword">for</span> dirs <span class="keyword">in</span> readlist.readlines():</span><br><span class="line">         <span class="keyword">with</span> open(<span class="string">'result.txt'</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> writelist:</span><br><span class="line">             b = dirs.replace(<span class="string">","</span>, <span class="string">'\n'</span>)</span><br><span class="line">             writelist.write(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去除重复ip，然后把结果写进only.txt文件里</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'result.txt'</span>,<span class="string">'r'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> readlist:</span><br><span class="line">    lines_seen = set()</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> readlist.readlines():</span><br><span class="line">        <span class="keyword">if</span> line <span class="keyword">not</span> <span class="keyword">in</span> lines_seen:</span><br><span class="line">            lines_seen.add(line)</span><br><span class="line">            <span class="keyword">with</span> open(<span class="string">'only.txt'</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> writelist:</span><br><span class="line">                writelist.write(line)</span><br></pre></td></tr></table></figure>
+
+<p>提取成单行一个 ip 且不重复的文本，我们就可以放到 goby、fscan 等工具中扫描</p>
 
       
     </div>
@@ -335,12 +396,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/wrong/" rel="tag"><i class="fa fa-tag">wrong</i></a>
-          
-        </div>
-      
 
       
       
@@ -350,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2023/03/08/%5BNCTF%202018%5D%E5%B0%8F%E7%BB%BF%E8%8D%89%E4%B9%8B%E6%9C%80%E5%BC%BA%E5%A4%A7%E8%84%91/" rel="next" title="[NCTF 2018]小绿草之最强大脑">
-                <i class="fa fa-chevron-left"></i> [NCTF 2018]小绿草之最强大脑
+              <a href="/2023/03/24/CVE-2020-15906/" rel="next" title="CVE-2020-15906">
+                <i class="fa fa-chevron-left"></i> CVE-2020-15906
               </a>
             
           </div>
@@ -360,8 +415,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2023/03/09/next-setting/" rel="prev" title="NexT 主题设置">
-                NexT 主题设置 <i class="fa fa-chevron-right"></i>
+              <a href="/2023/05/07/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/" rel="prev" title="渗透测试3 Bugku">
+                渗透测试3 Bugku <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -411,8 +466,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -427,7 +491,7 @@
                 
                   <a href="/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -449,7 +513,7 @@
                 
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -472,6 +536,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-简介"><span class="nav-number">1.</span> <span class="nav-text">0x01 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-语法"><span class="nav-number">2.</span> <span class="nav-text">0x02 语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-使用"><span class="nav-number">3.</span> <span class="nav-text">0x03 使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
