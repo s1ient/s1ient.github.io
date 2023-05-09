@@ -162,6 +162,27 @@
   </url>
   
   <url>
+    <loc>https://s1ient.github.io/tags/web/</loc>
+    <lastmod>2023-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://s1ient.github.io/tags/%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/</loc>
+    <lastmod>2023-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://s1ient.github.io/tags/php/</loc>
+    <lastmod>2023-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://s1ient.github.io/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</loc>
     <lastmod>2023-05-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -183,21 +204,21 @@
   </url>
   
   <url>
-    <loc>https://s1ient.github.io/tags/web/</loc>
+    <loc>https://s1ient.github.io/tags/NexT/</loc>
     <lastmod>2023-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://s1ient.github.io/tags/%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/</loc>
+    <loc>https://s1ient.github.io/tags/setting/</loc>
     <lastmod>2023-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://s1ient.github.io/tags/php/</loc>
+    <loc>https://s1ient.github.io/tags/phar/</loc>
     <lastmod>2023-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -231,27 +252,6 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://s1ient.github.io/tags/phar/</loc>
-    <lastmod>2023-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://s1ient.github.io/tags/NexT/</loc>
-    <lastmod>2023-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://s1ient.github.io/tags/setting/</loc>
-    <lastmod>2023-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
@@ -262,14 +262,14 @@
   </url>
   
   <url>
-    <loc>https://s1ient.github.io/categories/php/</loc>
+    <loc>https://s1ient.github.io/categories/setting/</loc>
     <lastmod>2023-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://s1ient.github.io/categories/setting/</loc>
+    <loc>https://s1ient.github.io/categories/php/</loc>
     <lastmod>2023-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
