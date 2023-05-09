@@ -1,7 +1,386 @@
-extends includes/layout.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>S1ient - ....</title><meta name="author" content="S1ient"><meta name="copyright" content="S1ient"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content=".....">
+<meta property="og:type" content="website">
+<meta property="og:title" content="S1ient">
+<meta property="og:url" content="https://s1ient.github.io/index.html">
+<meta property="og:site_name" content="S1ient">
+<meta property="og:description" content=".....">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="S1ient">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://s1ient.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'S1ient',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-05-09 20:24:33'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-block content
-  include ./includes/mixins/post-ui.pug
-  #recent-posts.recent-posts
-    +postUI
-    include includes/pagination.pug
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="S1ient" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="S1ient"><span class="site-name">S1ient</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">S1ient</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/05/07/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/" title="渗透测试3 Bugku">渗透测试3 Bugku</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-05-07T11:38:26.000Z" title="发表于 2023-05-07 19:38:26">2023-05-07</time></span></div><div class="content">
+场景一进去是一个站点，标题是模拟蜘蛛爬取
+随便输入一个网址就会跳转到那个网站
+
+猜测存在 ssrf，常用函数
+1234http://file://dict://gopher://
+
+输入直接获取 flag
+1file:///flag
+
+
+场景二题目有过提示看看内网以及被黑客入侵过
+所以先看看 etc/hosts
+1file:///etc/hosts
+
+发现了 192.168.0.2 
+!
+对其进行提交没有反应，所以用 bp 进行爆破
+
+
+
+最后发现 192.168.0.10 和 192.168.0.138 有问题
+先看 192.168.0.10，发现了网站杯被葫芦娃黑了，根据提示看来是我们想要的
+
+被黑就会有 webshell，一般是 php，再次进行爆破找到了 shell.php
+是一个命令执行
+
+直接 ls 得到 flag 位置，cat flag 就可以得到 flag 了
+
+
+场景三这里 ls /查看根目录也找到了一个 flag
+
+
+场景四上一个场景我们还得到了 192.168.0.138，发现是一个典型的 sql 注入
+
+payload
+1http://192.168.0.13 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/26/OneForAll-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="OneForAll 使用教程">OneForAll 使用教程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-26T08:47:40.000Z" title="发表于 2023-03-26 16:47:40">2023-03-26</time></span></div><div class="content">0x01 简介OneForAll 是一款集百家之长，收集能力强大、支持子域爆破、验证、爬取、置换、接管、处理功能强大、速度极快、体验良好的子域收集工具。
+OneForAll 是基于 CPython 开发的，所以需要 Python 环境才能运行
+理论上 Python 3.6，3.7 和 3.8 都可以正常运行 OneForAll，但是许多测试都是在 Python 3.7 上进行的，所以推荐使用 Python 3.7 版本运行 OneForAll。
+项目地址：
+1https://github.com/shmilylty/OneForAll.git
+
+git 安装
+1git clone https://github.com/shmilylty/OneForAll.git &amp;&amp; cd OneForAll/
+
+安装依赖
+1pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+
+更新
+1234git stash        # 暂存本地的修改git fetch --all  # 拉取 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/24/CVE-2020-15906/" title="CVE-2020-15906">CVE-2020-15906</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-24T11:02:17.000Z" title="发表于 2023-03-24 19:02:17">2023-03-24</time></span></div><div class="content">tikiwikiCVE-2020-15906漏洞介绍Tiki Wiki CMS Groupware 或简称为Tiki（最初称为TikiWiki）是一种免费且开源的基于Wiki的内容管理系统和在线办公套件。
+在如下这些版本21.2, 20.4, 19.3, 18.7, 17.3, 16.4前存在一处逻辑错误，管理员账户被爆破60次以上时将被锁定，此时使用空白密码即可以管理员身份登录后台。
+漏洞影响范围
+Tiki Tiki  &lt; 21.2
+
+漏洞复现环境
+vulhub&#x2F;tikiwiki&#x2F;CVE-2020-15906
+kali
+
+利用 poc
+
+https://srcincite.io/pocs/cve-2021-26119.py.txt
+
+漏洞复现12345678# 进入目录cd /root/vulhub/tikiwiki/CVE-2020-15906# 对靶场进行编译docker-compose build# 运行靶场docker-compose up -d# 查看运行的端口docker-compose ps -a
+
+访问你的 ip:8080 ,进入首页
+
+访问 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/23/CVE-2020-13935/" title="CVE-2020-13935">CVE-2020-13935</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-23T10:49:07.000Z" title="发表于 2023-03-23 18:49:07">2023-03-23</time></span></div><div class="content">tomcatCVE-2020-13935 Tomcat 拒绝服务漏洞介绍：Apache Tomcat 中的 WebSocket 存在安全漏洞，该漏洞源于Tomcat 未针对 WebSokcet 进行包长度校验，特制的 WebSocket 请求包将导致处理函数无限循环，最终导致服务停机并拒绝服务。
+攻击者可利用该漏洞造成拒绝服务（无限循环）。
+漏洞影响范围：
+Apache Tomcat 10.0.0-M1-10.0.0-M6
+Apache Tomcat 9.0.0.M1-9.0.36
+Apache Tomcat 8.5.0-8.5.56
+Apache Tomcat 7.0.27-7.0.104
+
+漏洞复现环境：
+vulhub&#x2F;tomcat&#x2F;CVE-2020-1938
+tomcat9.30
+go
+kali
+
+**利用POC： **
+
+tcdoc.exe
+https://github.com/RedTeamPentesting/CVE-2020-13935
+
+漏洞复现下载 go复现这个漏洞需要用到 go 环境，但是 kali 不自带
+123456# 使用 wget 下载安 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/" title="渗透测试1">渗透测试1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-19T11:39:11.000Z" title="发表于 2023-03-19 19:39:11">2023-03-19</time></span></div><div class="content">一共 11 题
+
+场景一进去是一个类似于教程的界面，随便点点没有信息
+照例 F12，找到 flag
+
+场景二根据上一题的提示，我们访问 &#x2F;admin
+得到一个登陆界面
+
+使用 bp 爆破密码，运气好，第一个就得到了
+用户名和密码都是 admin
+
+进入后台，一番查找在 基本配置–七牛配置  中找到 flag
+
+场景三
+上一题提示 &#x2F;home，但是没有 &#x2F;home 这个站点
+题目本身也给了提示：数据库被篡改。猜测是被 getshell 了
+然后找到了一个 文件上传 的点，下面添加一个上传后缀 php,记得要先提交
+
+用 哥斯拉 生成一句话木马
+但是上传 php 的时候提示后缀为空，看来后台对 php 进行了一个替换
+
+所以我们对 php 进行双写，修改为 pphphp，上传成功
+
+哥斯拉连接，在 home 目录下找到 ctf，里面就有 flag
+
+场景四根据上一题提示，我们大概率是要找到 mysql 的账号和密码
+在 /var/www/html/app/database.php 找到 用户和密码，都是 root
+
+但是当我尝试连接的时候却发现 mysql 服 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/16/%E5%8F%8D%E5%BC%B9-shell/" title="反弹 shell ">反弹 shell </a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-16T12:55:44.000Z" title="发表于 2023-03-16 20:55:44">2023-03-16</time></span></div><div class="content">[TOC]
+
+
+简介含义反弹 shell，就是攻击机监听在某个 TCP&#x2F;UDP 端口为服务端，目标机主动发起请求到攻击机监听的端口，并将其命令行的输入输出转到攻击机。
+原理让对方目标机器主动连接攻击者机器（攻击者指定服务端，受害者主机主动连接攻击者的服务端程序）
+
+
+攻击者 A 开启 2333 端口 TCP&#x2F;UDP 服务
+受害者 B 连接 2333 端口 TCP&#x2F;UDP 服务
+A、B 建立 TCP&#x2F;UDP 连接
+A 通过 TCP&#x2F;UDP 服务将待执行命令发送到 B
+B 执行命令后将结果发送给 A
+
+
+案例环境
+
+win11  192.168.3.155
+kali  192.168.6.128
+
+Windows 安装 netcat
+kali 打开终端输入 ip add
+
+win11 打开终端，输入 ipcongif/all
+
+linux 下反弹 shellnetcat 反弹 shell12345678# win11  监听 2518 这个端口# -l: 使用监听模式，管理和控制传入的数据# -v: 详细输出# -p&lt;通信端口&gt; ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/15/%E5%BA%94%E6%80%A5%E5%8A%A0%E5%9B%BA/" title="应急加固">应急加固</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-15T11:53:04.000Z" title="发表于 2023-03-15 19:53:04">2023-03-15</time></span></div><div class="content">
+一共 10 题
+[TOC]
+1.js 劫持首先进入网站先跳出了个二手市场，但是 1s 后立马变为了另一个博客界面
+
+所以第一题的 flag 就是博客的 url
+1https://www.194nb.com
+
+2.黑客首次的 webshell 密码kali 里面通过 ssh 连接远程服务器，输密码的时候密码不会显示
+
+1find / -name *.php -print
+
+webshell 就是一个 asp 或 php 木马后门，所以先找 php 文件
+发现一个名字奇怪的 php
+
+1cat /var/www/html/public/Uploads/6127418cad73c.php
+
+
+得到密码：QjsvWsp6L84Vl9dRTTytVyn5xNr1
+3.黑客首次入侵的方式
+黑客首次攻击（非有效攻击）通过什么方式
+
+上一题看到一句话木马还以为是 文件上传，但是答案不是，又一看题目描述，非有效攻击 应该是攻击失败了
+查看 80 端口进程
+1234lsof -i:80# lsof 是 List Open File 的缩写, 它主要用来获取被进程打开文件的信息，在 Linux 中，一切皆 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/14/%E5%B0%A4%E9%87%8C%E7%9A%84%E5%A4%8D%E4%BB%87/" title="尤里的复仇">尤里的复仇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-14T05:28:12.000Z" title="发表于 2023-03-14 13:28:12">2023-03-14</time></span></div><div class="content">
+
+第一章：为了女神小芳！
+tips:
+​       通过 sql 注入拿到管理员密码！
+
+进去有一个新闻链接，点进去发现 url 栏出现了 id=1，可能有 sql 注入漏洞
+测试一下
+12?id=1 and 1=1?id=1 and 1=2
+
+存在 sql 注入漏洞，且得出字段数为 2
+1?id=1 order by 2
+
+判断回显点，界面出现 222 说明第二个参数是回显点
+1?id=1 and 1=2 union select 111,222
+
+求表名,得到 admin,dirs,news,xss四个表
+1?id=1 and 1=2 union select 111,group_concat(table_name) from information_schema.tables where table_schema=database()
+
+求字段名,得到 id,username,password三个字段
+1?id=1 and 1=2 union select 111,group_concat(column_name) from information_schema.column ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/10/phar/" title="phar">phar</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-10T09:34:28.000Z" title="发表于 2023-03-10 17:34:28">2023-03-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/php/">php</a></span></div><div class="content">一些关于 phar 的介绍
+
+
+简介官方文档
+Phar 是在 PHP5 之后提供的一种类似于将代码打包的工具。本质上是想依照 Java 的 Jar 文件那种形式的代码包，不过本身由于 PHP 是不编译的，所以这个 Phar 实际上就是将代码原样的进行打包，不会进行编译。但是我们可以对打包的 Phar 包进行压缩操作。
+Phar文件结构
+1234Stub	    //Phar文件头manifest	//压缩文件信息contents	//压缩文件内容signature	//签名
+
+StubStub 是 Phar 的文件标识，也可以理解为它就是 Phar 的文件头这个Stub其实就是一个简单的PHP文件，它的格式具有一定的要求，具体如下
+1xxx&lt;?php xxx; __HALT_COMPILER();?&gt;
+
+前面的内容是不限制的，但在该PHP语句中，必须有__HALT_COMPILER()，没有这个，PHP 就无法识别出它是 Phar 文件。
+manifest用于存放文件的属性、权限等信息。这里也是反序列化的攻击点，因为这里以序列化的形式存储了用户自定义的Meta-data
+
+ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/09/NSSCTF-php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="NSSCTF-php代码审计">NSSCTF-php代码审计</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-09T13:26:09.000Z" title="发表于 2023-03-09 21:26:09">2023-03-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/web/">web</a></span></div><div class="content">NSSCTF 上写的几道代码审计题目
+
+
+[SWPUCTF 2022 新生赛]奇妙的MD5哈哈，我还真没听过…
+
+
+ffifdyop
+经过md5加密后：276f722736c95d99e921722cf9ed621c
+再转换为字符串：’or’6&lt;乱码&gt;  即  ‘or’66�]��!r,��b
+用途：
+select * from admin where password&#x3D;’’or’6&lt;乱码&gt;’
+就相当于select * from admin where password&#x3D;’’or 1  实现sql注入
+
+输入进去，页面提示在哪里找找线索，那自然是右键查看源代码
+最上面看到 php 代码，一个简单的 md5 若碰撞
+123456&lt;!--$x= $GET[&#x27;x&#x27;];$y = $_GET[&#x27;y&#x27;];if($x != $y &amp;&amp; md5($x) == md5($y))&#123;    ;--&gt;
+
+payload
+1?x[]=x&amp;&amp;y[]=y
+
+得到另一个 php 代 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">S1ient</div><div class="author-info__description">.....</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/07/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/" title="渗透测试3 Bugku">渗透测试3 Bugku</a><time datetime="2023-05-07T11:38:26.000Z" title="发表于 2023-05-07 19:38:26">2023-05-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/26/OneForAll-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="OneForAll 使用教程">OneForAll 使用教程</a><time datetime="2023-03-26T08:47:40.000Z" title="发表于 2023-03-26 16:47:40">2023-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/24/CVE-2020-15906/" title="CVE-2020-15906">CVE-2020-15906</a><time datetime="2023-03-24T11:02:17.000Z" title="发表于 2023-03-24 19:02:17">2023-03-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/23/CVE-2020-13935/" title="CVE-2020-13935">CVE-2020-13935</a><time datetime="2023-03-23T10:49:07.000Z" title="发表于 2023-03-23 18:49:07">2023-03-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%951/" title="渗透测试1">渗透测试1</a><time datetime="2023-03-19T11:39:11.000Z" title="发表于 2023-03-19 19:39:11">2023-03-19</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/php/"><span class="card-category-list-name">php</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/setting/"><span class="card-category-list-name">setting</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/web/"><span class="card-category-list-name">web</span><span class="card-category-list-count">3</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%AE%89%E9%B8%BE/" style="font-size: 1.1em; color: #999">安鸾</a> <a href="/tags/php/" style="font-size: 1.3em; color: #99a1ac">php</a> <a href="/tags/setting/" style="font-size: 1.1em; color: #999">setting</a> <a href="/tags/%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" style="font-size: 1.1em; color: #999">源码泄露</a> <a href="/tags/NSSCTF/" style="font-size: 1.1em; color: #999">NSSCTF</a> <a href="/tags/phar/" style="font-size: 1.1em; color: #999">phar</a> <a href="/tags/CVE-2020-13935-vulhub-tomcat/" style="font-size: 1.1em; color: #999">-CVE-2020-13935 -vulhub -tomcat</a> <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" style="font-size: 1.1em; color: #999">渗透测试</a> <a href="/tags/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 1.1em; color: #999">phar反序列化</a> <a href="/tags/web/" style="font-size: 1.5em; color: #99a9bf">web</a> <a href="/tags/NexT/" style="font-size: 1.1em; color: #999">NexT</a> <a href="/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 1.3em; color: #99a1ac">php代码审计</a> <a href="/tags/SvnExploit/" style="font-size: 1.1em; color: #999">SvnExploit</a> <a href="/tags/%E5%BA%94%E6%80%A5%E5%8A%A0%E5%9B%BA/" style="font-size: 1.1em; color: #999">应急加固</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">五月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">三月 2023</span><span class="card-archive-list-count">12</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">13</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-05-09T12:24:33.730Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By S1ient</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
