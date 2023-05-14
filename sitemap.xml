@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://s1ient.github.io/post/0.html</loc>
+    <loc>https://s1ient.github.io/post/17cccafb.html</loc>
     
     <lastmod>2023-05-14</lastmod>
     
@@ -220,13 +220,6 @@
   </url>
   
   <url>
-    <loc>https://s1ient.github.io/tags/tool/</loc>
-    <lastmod>2023-05-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://s1ient.github.io/tags/NexT/</loc>
     <lastmod>2023-05-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -270,6 +263,13 @@
   
   <url>
     <loc>https://s1ient.github.io/tags/%E5%BA%94%E6%80%A5%E5%8A%A0%E5%9B%BA/</loc>
+    <lastmod>2023-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://s1ient.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2023-05-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
